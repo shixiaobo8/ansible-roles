@@ -1,4 +1,29 @@
 ---
 
-- name: config share cluster
-  
+- name: config  cluster shard1
+  mongodb_replicaset:
+    replica_set: shard1
+    login_port: "{{ shard1_port }}"
+    members:
+    - mongo_node1:{{ shard1_port }}
+    - mongo_node2:{{ shard1_port }}
+    - mongo_node3:{{ shard1_port }}
+
+- name: config  cluster shard2
+  mongodb_replicaset:
+    replica_set: shard2
+    login_port: "{{ shard2_port }}"
+    members:
+    - mongo_node1:{{ shard2_port }}
+    - mongo_node2::{{ shard2_port }}
+    - mongo_node3::{{ shard2_port }}
+
+- name: config  cluster shard3
+  mongodb_replicaset:
+    replica_set: shard3
+    login_port: "{{ shard3_port }}"
+    members:
+    - mongo_node1:{{ shard3_port }}
+    - mongo_node2:{{ shard3_port }}
+    - mongo_node3:{{ shard3_port }}
+

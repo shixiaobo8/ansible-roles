@@ -22,6 +22,11 @@
 ## beta.example.org
 ## 192.168.1.100
 ## 192.168.1.110
+[mongodb_cluster]
+mongo1 ansible_ssh_host=10.0.0.5 mongo_node1=10.0.0.5 mongo_node2=10.0.0.6 mongo_node3=10.0.0.7 mongo_config_cluster=config/10.0.0.5:21004,10.0.0.6:21004,10.0.0.7:21004
+mongo2 ansible_ssh_host=10.0.0.6 mongo_node1=10.0.0.5 mongo_node2=10.0.0.6 mongo_node3=10.0.0.7 mongo_config_cluster=config/10.0.0.5:21004,10.0.0.6:21004,10.0.0.7:21004
+mongo3 ansible_ssh_host=10.0.0.7 mongo_node1=10.0.0.5 mongo_node2=10.0.0.6 mongo_node3=10.0.0.7 mongo_config_cluster=config/10.0.0.5:21004,10.0.0.6:21004,10.0.0.7:21004
+
 [codis]
 codis1  mongo_config_cluster=config/10.0.0.5:21004,10.0.0.6:21004,10.0.0.7:21004 etcd1=10.0.0.5 etcd2=10.0.0.6 etcd3=10.0.0.7 ansible_ssh_host=10.0.0.5 ip_var=5 etcd_name=etcd1 zookeeper_server_id=1 zk_node1=10.0.0.5 zk_node2=10.0.0.6 zk_node3=10.0.0.7 codis_node1_6379_master='10.0.0.7 6380' codis_node1_6380_master='10.0.0.6 6379' codis_node_name=codis_node1 jodis_addr="10.0.0.5:2181,10.0.0.6:2181,10.0.0.7:2181" codis_dashboard=1
 codis2 mongo_config_cluster=config/10.0.0.5:21004,10.0.0.6:21004,10.0.0.7:21004 etcd1=10.0.0.5 etcd2=10.0.0.6 etcd3=10.0.0.7 ansible_ssh_host=10.0.0.6 ip_var=6 etcd_name=etcd2 zookeeper_server_id=2 zk_node1=10.0.0.5 zk_node2=10.0.0.6 zk_node3=10.0.0.7 codis_node1_6379_master='10.0.0.5 6380' codis_node1_6380_master='10.0.0.7 6379' codis_node_name=codis_node1 jodis_addr="10.0.0.5:2181,10.0.0.6:2181,10.0.0.7:2181" codis_dashboard=0
