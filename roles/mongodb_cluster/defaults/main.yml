@@ -57,7 +57,6 @@ mongos_log: "{{ mongos_log_dir }}/mongos.log"
 mongos_pid: "{{ mongos_base_dir }}/mongos.pid"
 mongos_start_cmd: "{{ mongod_bin_dir }}/mongos -f {{ mongos_config }}"
 mongos_port: 21000
-mongod_log: "{{ mongo_config_dir }}/config/log"
 mongo_auth_key: /data/mongo/conf/mongo.key
 mongo_auth_key_cmd: openssl rand -base64 756 > /etc/mongodb/conf/mongo.key
 supervisor_redhat_dir: /etc/supervisord.d/

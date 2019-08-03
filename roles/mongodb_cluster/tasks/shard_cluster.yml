@@ -5,25 +5,56 @@
     replica_set: shard1
     login_port: "{{ shard1_port }}"
     members:
-    - mongo_node1:{{ shard1_port }}
-    - mongo_node2:{{ shard1_port }}
-    - mongo_node3:{{ shard1_port }}
+    - "{{ mongo_node1 }}:{{ shard1_port }}"
+    - "{{ mongo_node2 }}:{{ shard1_port }}"
+    - "{{ mongo_node3 }}:{{ shard1_port }}"
 
 - name: config  cluster shard2
   mongodb_replicaset:
     replica_set: shard2
     login_port: "{{ shard2_port }}"
     members:
-    - mongo_node1:{{ shard2_port }}
-    - mongo_node2::{{ shard2_port }}
-    - mongo_node3::{{ shard2_port }}
+    - "{{ mongo_node1 }}:{{ shard2_port }}"
+    - "{{ mongo_node2 }}:{{ shard2_port }}"
+    - "{{ mongo_node3 }}:{{ shard2_port }}"
 
 - name: config  cluster shard3
   mongodb_replicaset:
     replica_set: shard3
     login_port: "{{ shard3_port }}"
     members:
-    - mongo_node1:{{ shard3_port }}
-    - mongo_node2:{{ shard3_port }}
-    - mongo_node3:{{ shard3_port }}
+    - "{{ mongo_node1 }}:{{ shard3_port }}"
+    - "{{ mongo_node2 }}:{{ shard3_port }}"
+    - "{{ mongo_node3 }}:{{ shard3_port }}"
 
+#- name: add mongodb user in mongos
+#  mongodb_user: 
+- name: rs.init config db
+  shell: mongo --port 21004 --eval "printjson(db.runCommand({'rs.status()':1}))"
+
+- name: add shard1 for mongos config
+  mongodb_shard:
+    login_port: "{{ mongos_port }}"
+    shard: "shard1/{{ mongo_node1 }}:{{ shard1_port }},{{ mongo_node2 }}:{{ shard1_port }},{{ mongo_node3 }}:{{ shard1_port }}"
+    state: present
+
+- name: add shard2 for mongos config
+  mongodb_shard:
+    login_port: "{{ mongos_port }}"
+    shard: "shard2/{{ mongo_node1 }}:{{ shard2_port }},{{ mongo_node2 }}:{{ shard2_port }},{{ mongo_node3 }}:{{ shard2_port }}"
+    state: present
+
+- name: add shard3 for mongos config
+  mongodb_shard:
+    login_port: "{{ mongos_port }}"
+    shard: "shard3/{{ mongo_node1 }}:{{ shard3_port }},{{ mongo_node2 }}:{{ shard3_port }},{{ mongo_node3 }}:{{ shard3_port }}"
+    state: present
+
+#- name: set profile for monitor
+#  mongodb_parameter:
+#    param: ProfilingLevel
+#    value: 1
+#    param_type: int
+ 
+- name:  echo result
+  shell: echo 'congratulations mongodb shard config mongos installed successfully !'

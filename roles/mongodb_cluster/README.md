@@ -1,38 +1,47 @@
-Role Name
-=========
+# mongodb 使用ansible手册
+[toc]
 
-A brief description of the role goes here.
 
-Requirements
+
+安装要求
 ------------
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+1. 服务端 ansible 版本号: 2.8
+2. 配置/etc/ansible/hosts 文件的mongodb分组
 
-Role Variables
+Role 变量说明
 --------------
+|变量名称| 变量说明 |
+|--------|--------|---|
+|mongodb_download_url|mongodb下载地址|
+|intall_link_dir|mongodb安装路径|
+|shard1_config|shard1配置文件路径|
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
+```
+   #######更多变量参数配置请参照 mongodb_cluster/defaults/main.yml 
+```
 
-Dependencies
+安装依赖
 ------------
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+python-pip_role
 
-Example Playbook
+
+执行演示
 ----------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
-
-    - hosts: servers
+配置完变量后,设置一下参数.
+    - hosts: mongodb_cluster # /etc/ansible/hosts 中配置
+      remote_user: root
       roles:
-         - { role: username.rolename, x: 42 }
+        - role: python-pip
+        - role: mongodb_cluster
 
-License
+
+版权
 -------
+ztiao.club
 
-BSD
-
-Author Information
+编著
 ------------------
-
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+yiguo.shi 2019.8.6
