@@ -1,4 +1,14 @@
 ---
+- name: create need dir
+  file: "path={{ item }} state=directory"
+  with_items:
+    - "{{  }}"
+    - "{{  }}"
+    - "{{  }}"
+    - "{{  }}"
 
 - name: download mongodb soft
+  get_url: "url={{ mongodb_download_url }} dest={{ soft_dir }} force=yes"
+
+- name: unarchive mongodb soft
   
