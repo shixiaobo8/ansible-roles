@@ -1,0 +1,31 @@
+---
+# tasks file for linux_jdk1.8
+- name: register is jdk
+  shell: ". /etc/profile && java -version"
+  register: is_jdk18
+  check_mode: no
+  ignore_errors: yes
+#  failed_when: "'command not found' in is_jdk18"
+- debug: msg="{{ is_jdk18 }}"
+
+- name: create jdk parent dir
+  file: "path={{ JDK_PARENT_DIR }} state=directory mode=0755"
+  when: is_jdk18.rc != 0
+
+- name: unarchive jdk
+  unarchive: "src=jdk-8u211-linux-x64.tar.gz dest={{ JDK_PARENT_DIR }} copy=yes creates={{ JAVA_HOME }}"
+  when: is_jdk18.rc != 0
+  #when: is_jdk18.failed == true
+  #when: is_jdk18.failed == 'true'
+
+- name: config path
+  shell: "echo 'export JAVA_HOME={{ JAVA_HOME }}' >> /etc/profile && echo 'export PATH={{ PATH }}' >> /etc/profile && echo 'export CLASSPATH={{ CLASSPATH }}' >> /etc/profile"
+  when: is_jdk18.rc != 0
+  #when: is_jdk18|failed
+  #when: is_jdk18failed == true
+
+- name: echo result
+  shell: . /etc/profile && java -version
+  register: jdk_version
+  check_mode: no
+- debug: msg="{{ jdk_version }}"

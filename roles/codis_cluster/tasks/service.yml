@@ -1,0 +1,14 @@
+---
+
+- name: restart codis 6379 from supervisor
+  shell: supervisorctl reread && supervisorctl update && supervisorctl restart codis-6379
+
+- name: restart codis 6380 from supervisor
+  shell: supervisorctl reread && supervisorctl update && supervisorctl restart codis-6380
+
+- name: restart codis dashboard for supervisor
+  shell: supervisorctl reread && supervisorctl update && supervisorctl restart codis-dashboard
+  when: codis_dashboard == 1
+
+- name: restart codis proxy for supervisor
+  shell: supervisorctl reread && supervisorctl update && supervisorctl restart codis-proxy

@@ -1,0 +1,7 @@
+---
+# tasks file for mysql_cluster
+- include_tasks: install.yml
+- include_tasks: config.yml
+- include_tasks: mysql_init.yml
+- include_tasks: service.yml
+#- include_tasks: modify_password.yml

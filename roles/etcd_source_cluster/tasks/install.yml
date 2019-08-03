@@ -1,0 +1,24 @@
+---
+
+- name: create softswares dir and install dir
+  file: "path={{ item }} state=directory"
+  with_items:
+    - "{{ SOFT_DIR }}"
+    - "{{ INSTALL_DIR }}"
+    - "{{ ETCD_DIR }}"
+    - "{{ ETCD_CONF_DIR }}"
+
+- name: copy software file
+  synchronize: "src=etcd-v3.3.2-linux-amd64.tar.gz dest={{ SOFT_DIR }} mode=push"
+
+#- name: register file
+#  shell: "ls {{ INSTALL_DIR }} | wc -l"
+#  register: exist_install_dir
+#  check_mode: no
+#
+#- debug: msg="{{ exist_install_dir }}"
+
+- name: unarchive software file
+  unarchive: "src=etcd-v3.3.2-linux-amd64.tar.gz dest={{ INSTALL_DIR }} copy=yes "
+#  unarchive: "src=etcd-v3.3.2-linux-amd64.tar.gz dest={{ INSTALL_DIR }} copy=yes  creates={{ ETCD_DIR }}"
+#  when: exist_install_dir != 0

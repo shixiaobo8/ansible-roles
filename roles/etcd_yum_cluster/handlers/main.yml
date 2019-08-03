@@ -1,0 +1,4 @@
+---
+# handlers file for etcd
+- name: start etcd
+  shell: "{{ START_CMD }} --name=default --data-dir={{ ETCD_DATA_DIR  }} --listen-client-urls={{ ETCD_LISTEN_CLIENT_URLS }}"

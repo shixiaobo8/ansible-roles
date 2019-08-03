@@ -1,0 +1,43 @@
+---
+# tasks file for codis_cluster
+- name: yum install need system lib packages
+  yum: "name={{ item }} state=latest"
+  with_items:
+    - git
+    - gcc
+    - gcc-c++
+    - automake
+    - autoconf
+    - cmake
+  when: ansible_os_family == 'RedHat'
+
+- name: apt install need system lib packages
+  apt: "name={{ item }} state=latest"
+  with_items:
+    - git
+    - gcc
+    - build-essential
+    - automake
+    - autoconf
+    - cmake
+  when: ansible_os_family == 'Debian'
+
+- name: clone codis
+  #git: "repo={{ codis_git_repo }} dest={{ codis_install_dir }}/codis accept_hostkey=yes"
+  shell: ". /etc/profile && go get {{ codis_gitpath }}"
+  ignore_errors: yes
+
+- name: create codis dirs
+  file: "path={{ item }} state=directory"
+  with_items:
+    - "{{ codis_data_dir }}"
+    - "{{ codis_log_dir }}"
+    - "{{ codis_config_dir }}"
+    - "{{ codis_gopath }}"
+
+- name: make codis src to bin install
+  shell: "chdir={{ codis_gopath_dir }} . /etc/profile &&  make"
+
+- name: copy codis github to gopath
+  shell: "rm -rf {{ codis_install_dir }}/codis && cp -rp  {{ codis_gopath_dir }} {{ codis_install_dir }}/"
+  #when: not codis_gopath_dir is exists

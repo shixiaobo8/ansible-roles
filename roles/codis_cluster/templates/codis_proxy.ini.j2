@@ -1,0 +1,13 @@
+[program:codis_proxy]
+command={{ codis_install_dir }}codis/bin/codis-proxy -c {{ codis_config_dir }}proxy.conf
+directory={{ codis_install_dir }}codis/bin/
+process_name=codis_proxy
+numprocs=1
+priority=990
+stopasgroup=true
+autostart=true
+autorestart=true
+stdout_logfile_maxbytes=40MB
+redirect_stderr=true
+stopsignal=QUIT
+stdout_logfile = /var/log/supervisor/codis_proxy.log

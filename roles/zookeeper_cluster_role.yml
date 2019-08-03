@@ -1,0 +1,7 @@
+---
+
+- hosts: codis
+  remote_user: root
+  roles:
+  #  - role: linux_jdk1.8
+    - role: zookeeper_cluster

@@ -1,0 +1,17 @@
+---
+
+- name: check and create soft dir
+  file: path=/root/softs/ state=directory
+
+- name: download golang 
+  get_url: "url={{ golang_download_url }} dest=/root/softs/ force=yes"
+
+- name: unarchive golang soft 
+  unarchive: "src=/root/softs/{{ golang_soft_name }} dest=/usr/local/ creates={{ golang_soft_dir }} copy=no"
+
+- name: mv golang path name
+  shell: " mv {{ golang_soft_dir }} {{ goroot }}"
+  when: golang_soft_dir is exists and goroot is not exists
+
+- name: create golang gopath dir
+  file: "path={{ gopath }} state=directory"

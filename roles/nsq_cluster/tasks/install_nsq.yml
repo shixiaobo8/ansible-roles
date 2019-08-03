@@ -1,0 +1,18 @@
+---
+
+- name: create nsq dir
+  file: "path={{ item }} state=directory"
+  with_items:
+    - "{{ nsq_data_path }}"
+    - "{{ nsqd_log_dir }}"
+    - "{{ nsqlookupd_log_dir }}"
+    - "{{ nsqadmin_log_dir }}"
+    - "{{ soft_dir  }}"
+    - "{{ nsq_dir }}"
+    - "{{ nsq_conf_dir }}"
+
+- name: copy soft
+  synchronize: "src=nsq-0.3.7-HA.1.9.4.1.linux-amd64.go1.10.8.tar.gz dest={{ soft_dir }} mode=push"
+
+- name: unarchive nsq soft and install
+  unarchive: "src=nsq-0.3.7-HA.1.9.4.1.linux-amd64.go1.10.8.tar.gz dest={{ nsq_install_dir }} copy=yes creates={{ nsq_dir }}"

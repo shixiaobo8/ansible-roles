@@ -1,0 +1,19 @@
+---
+
+- hosts: all
+  remote_user: root
+  vars:
+    - apt_china_source: "deb http://mirrors.aliyun.com/ubuntu/ trusty main restricted universe multiverse\ndeb http://mirrors.aliyun.com/ubuntu/ trusty-security main restricted universe multiverse \ndeb http://mirrors.aliyun.com/ubuntu/ trusty-updates main restricted universe multiverse \ndeb http://mirrors.aliyun.com/ubuntu/ trusty-proposed main restricted universe multiverse \ndeb http://mirrors.aliyun.com/ubuntu/ trusty-backports main restricted universe multiverse \ndeb-src http://mirrors.aliyun.com/ubuntu/ trusty main restricted universe multiverse \ndeb-src http://mirrors.aliyun.com/ubuntu/ trusty-security main restricted universe multiverse \ndeb-src http://mirrors.aliyun.com/ubuntu/ trusty-updates main restricted universe multiverse \ndeb-src http://mirrors.aliyun.com/ubuntu/ trusty-proposed main restricted universe multiverse \ndeb-src http://mirrors.aliyun.com/ubuntu/ trusty-backports main restricted universe multiverse \n"
+    - apt_source_file: '/etc/apt/sources.list'
+  tasks:
+    - name: bak old apt source 
+      shell: "mv {{ apt_source_file }} /etc/apt/sources.list.bak"
+      when: ansible_os_family  == 'Debian' and apt_source_file is exists
+
+    - name: replace apt source and update
+      blockinfile: "path=/etc/apt/sources.list block={{ apt_china_source }} create=yes"
+      when: ansible_os_family  == 'Debian'     
+
+    - name: apt update cache
+      apt: update_cache=yes
+      when: ansible_os_family  == 'Debian'     

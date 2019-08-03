@@ -1,0 +1,58 @@
+---
+# tasks file for codis_cluster
+- name: config redis_6379
+  template: "src=redis_6379.conf.j2 dest={{ codis_6379_conf }}"
+
+- name: config redis_6379 for supervisor
+  template: "src=codis_6379.ini.j2 dest={{ supervisor_rhel7_conf_dir }}/codis_6379.ini"
+  when: ansible_os_family == 'RedHat'
+
+- name: config redis_6379 for supervisor
+  template: "src=codis_6379.ini.j2 dest={{ supervisor_debian_conf_dir }}/codis_6379.conf"
+  when: ansible_os_family == 'Debian'
+
+- name: config redis_6380
+  template: "src=redis_6380.conf.j2 dest={{ codis_6380_conf }}"
+
+- name: config redis_6380 for supervisor
+  template: "src=codis_6380.ini.j2 dest={{ supervisor_rhel7_conf_dir }}/codis_6380.ini"
+  when: ansible_os_family == 'RedHat'
+
+- name: config redis_6380 for supervisor for debian
+  template: "src=codis_6380.ini.j2 dest={{ supervisor_debian_conf_dir }}/codis_6380.conf"
+  when: ansible_os_family == 'Debian'
+
+- name: config codis proxy conf
+  template: "src=proxy.conf.j2 dest={{ codis_config_dir }}/proxy.conf"
+
+- name: config codis proxy conf for supervisor for redhat
+  template: "src=codis_proxy.ini.j2 dest={{ supervisor_rhel7_conf_dir }}/codis-proxy.ini"
+  when: ansible_os_family == 'RedHat'
+
+- name: config codis proxy conf for supervisor for debian
+  template: "src=codis_proxy.ini.j2 dest={{ supervisor_debian_conf_dir }}/codis-proxy.conf"
+  when: ansible_os_family == 'Debian'
+
+- name: config dashboard conf
+  template: "src=dashboard.conf.j2 dest={{ codis_config_dir }}/dashboard.conf"
+  when: codis_dashboard == 1
+
+- name: config codis dashboard conf for supervisor for redhat
+  template: "src=codis_dashboard.ini.j2 dest={{ supervisor_rhel7_conf_dir }}/codis-dashboard.ini"
+  when: codis_dashboard == 1 and ansible_os_family == 'RedHat'
+
+- name: config codis dashboard conf for supervisor for debian
+  template: "src=codis_dashboard.ini.j2 dest={{ supervisor_debian_conf_dir }}/codis-dashboard.conf"
+  when: codis_dashboard == 1 and ansible_os_family == 'Debian'
+
+- name: create codis.json config conf
+  shell: "chdir={{ codis_config_dir }} {{ codis_install_dir }}/codis/bin/codis-admin --dashboard-list --zookeeper={{ ansible_ssh_host }}:2181 | tee {{ codis_config_dir }}/codis.json"
+  when: codis_dashboard == 1
+
+- name: config codis fe conf for supervisor for redhat
+  template: "src=codis_fe.ini.j2 dest={{ supervisor_rhel7_conf_dir }}/codis-fe.ini"
+  when: codis_dashboard == 1 and ansible_os_family == 'RedHat'
+
+- name: config codis fe conf for supervisor for debian
+  template: "src=codis_fe.ini.j2 dest={{ supervisor_debian_conf_dir }}/codis-fe.conf"
+  when: codis_dashboard == 1 and ansible_os_family == 'Debian'

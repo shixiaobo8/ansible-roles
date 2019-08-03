@@ -1,0 +1,10 @@
+---
+
+- name: add/update supervisor and restart nsqadmin
+  shell: "supervisorctl reread && supervisorctl update && supervisorctl restart nsqadmin }}"
+
+- name: add/update supervisor and restart nsqd
+  shell: "supervisorctl reread && supervisorctl update && supervisorctl restart nsqd }}"
+
+- name: add/update supervisor and restart nsqlookupd
+  shell: "supervisorctl reread && supervisorctl update && supervisorctl restart nsqlookupd }}"

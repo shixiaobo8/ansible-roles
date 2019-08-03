@@ -1,0 +1,13 @@
+[program:codis_6379]
+command={{ codis_install_dir }}/codis/bin/codis-server {{ codis_6379_conf }}
+directory={{ codis_install_dir }}/codis/bin/
+process_name=codis_6379
+numprocs=1
+priority=100
+stopasgroup=true
+autostart=true
+autorestart=true
+stdout_logfile_maxbytes=40MB
+redirect_stderr=true
+stopsignal=QUIT
+stdout_logfile = /var/log/supervisor/codis_6379.log

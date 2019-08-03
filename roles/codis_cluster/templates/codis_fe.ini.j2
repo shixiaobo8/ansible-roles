@@ -1,0 +1,13 @@
+[program:codis_fe]
+command={{ codis_install_dir }}codis/bin/codis-fe --ncpu=4 --log={{ codis_log_dir }}/fe.log --log-level=WARN --dashboard-list={{ codis_config_dir }}/codis.json --listen=0.0.0.0:8090
+directory={{ codis_install_dir }}codis/bin/
+process_name=codis_fe
+numprocs=1
+priority=200
+stopasgroup=true
+autostart=true
+autorestart=true
+stdout_logfile_maxbytes=40MB
+redirect_stderr=true
+stopsignal=QUIT
+stdout_logfile = /var/log/supervisor/codis_fe.log

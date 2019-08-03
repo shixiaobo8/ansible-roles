@@ -1,0 +1,12 @@
+---
+# defaults file for mysql_cluster
+mysql_install_dir: /usr/local/
+mysql_base_dir: /usr/local/mysql/
+mysql_data_dir: /www/mysql_datas/
+mysql_pid_file: "{{ mysql_data_dir }}/mysqld.pid"
+mysql_socket: /tmp/mysql.sock
+user: mysql
+port: 3306
+log_path: "{{ mysql_data_dir }}/mysqld.log"
+mysql_conf: /etc/my.cnf
+mysql_systemd_file: /lib/systemd/system/mysqld.service

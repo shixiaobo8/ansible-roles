@@ -1,0 +1,12 @@
+---
+
+- name: create supervisor config file
+  template: "src=etcd_supervisor.ini.j2 dest={{ SUPERVISOR_CONF_DIR }}/etcd_supervisor.ini"
+  when: ansible_os_family == 'RedHat'
+
+- name: create supervisor apt config file
+  template: "src=etcd_supervisor.ini.j2 dest=/etc/supervisor/conf.d/etcd_supervisor.conf"
+  when: ansible_os_family == 'Debian'
+
+- name: add supervisord program
+  shell: "supervisorctl reread && supervisorctl update && supervisorctl restart {{ ETCD_SUPERVISOR_PROGRAM_NAME }}"

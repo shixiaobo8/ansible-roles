@@ -1,0 +1,7 @@
+---
+- hosts: codis
+  remote_user: root
+  roles:
+    #- name: supervisor  #指定角色
+    #- name: etcd_cluster  #指定角色
+    - role: nsq_cluster  #指定角色

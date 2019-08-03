@@ -1,0 +1,16 @@
+---
+# tasks file for zookeeper_cluster
+- name: config zookeep cluster zookeep_node1 hostname
+  lineinfile: "path=/etc/hosts regexp=zookeeper-node1 line={{ zookeeper_node1_host }}"
+
+- name: config zookeep cluster zookeep_node2 hostname
+  lineinfile: "path=/etc/hosts regexp=zookeeper-node2 line={{ zookeeper_node2_host }}"
+
+- name: config zookeep cluster zookeep_node3 hostname
+  lineinfile: "path=/etc/hosts regexp=zookeeper-node3 line={{ zookeeper_node3_host }}"
+
+- name: config zookeeper main conf
+  template: "src=zoo.cfg.j2 dest={{ zookeeper_conf }}"
+
+- name: config zookeeper node1 service_id
+  lineinfile: "path={{ zookeeper_data_dir }}/myid line={{ zookeeper_server_id }} create=yes"

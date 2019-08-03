@@ -1,0 +1,13 @@
+[program:etcd]
+command={{ START_CMD }}
+directory={{ ETCD_DIR }}
+process_name={{ ETCD_SUPERVISOR_PROGRAM_NAME }}
+numprocs=1
+priority=990
+stopasgroup=true
+autostart=true
+autorestart=true
+stdout_logfile_maxbytes=40MB
+redirect_stderr=true
+stopsignal=QUIT
+stdout_logfile = /var/log/supervisor/etcd.log

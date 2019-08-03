@@ -1,0 +1,13 @@
+[program:codis_dashboard]
+command={{ codis_install_dir }}/codis/bin/codis-dashboard --ncpu=4 --config={{ codis_config_dir }}/dashboard.conf --log={{ codis_log_dir }}/dashboard.log --log-level=WARN
+directory={{ codis_install_dir }}codis/bin/
+process_name=codis_dashboard
+numprocs=1
+priority=200
+stopasgroup=true
+autostart=true
+autorestart=true
+stdout_logfile_maxbytes=40MB
+redirect_stderr=true
+stopsignal=QUIT
+stdout_logfile = /var/log/supervisor/codis_dashboard.log

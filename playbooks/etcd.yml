@@ -1,0 +1,20 @@
+---
+
+- hosts: all
+  remote_user: root
+  gather_facts: true
+  vars:
+    test_var: 123456
+  vars_files:
+    - vars.yml
+  tasks:
+    - name: apt install etcd
+      apt: name=etcd force=yes state=absent autoremove=yes autoclean=yes
+      when: ansible_os_family == 'Debian'
+      tags: debian
+    - name: yum install etcd and so on
+      yum: name=etcd state=absent 
+      #yum: name=etcd state=latest #update_cache=yes
+      when: ansible_os_family == 'RedHat'
+    - debug:
+        msg: "this is a debug variable {{ test_var }}"

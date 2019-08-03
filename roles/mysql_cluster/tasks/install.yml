@@ -1,0 +1,21 @@
+---
+
+- name: create mysql group
+  group: "name={{ user }} state=present"
+
+- name: create mysql user
+  user: "name={{ user }} groups={{ user }} state=present createhome=no"
+
+- name: tar soft file
+  unarchive: "src=mysql-5.7.27-el7-x86_64.tar.gz dest={{ mysql_install_dir }} copy=yes creates={{ mysql_base_dir }}"
+
+- name: scp install.sh
+  synchronize: src=install.sh dest=/root/ mode=push
+
+- name: create mysql needed path
+  file: "path={{ item }} owner={{ user }} group={{ user }} mode=0755 state=directory"
+  with_items:
+    - "{{ mysql_data_dir }}"
+
+- name: modify mysql base dir name to and add bin file link
+  shell: sh /root/install.sh

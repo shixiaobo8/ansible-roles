@@ -1,0 +1,5 @@
+---
+# tasks file for golang_linux
+- include_tasks: install.yml
+- include_tasks: config.yml
+- include_tasks: test.yml

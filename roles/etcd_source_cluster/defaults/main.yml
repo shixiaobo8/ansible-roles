@@ -1,0 +1,21 @@
+SOFT_DIR: /root/softs
+ETCD_INSTALL_NAME: etcd-v3.3.2-linux-amd64
+INSTALL_DIR: /usr/local/etcd
+SUPERVISOR_CONF_DIR: /etc/supervisord.d
+ETCD_SUPERVISOR_PROGRAM_NAME: etcd
+ETCD_DIR: "{{ INSTALL_DIR }}/{{ ETCD_INSTALL_NAME }}"
+ETCD_CONF_DIR: "{{ ETCD_DIR }}/conf"
+ETCD_CONF: "{{ ETCD_DIR }}/conf/etcd.conf"
+START_CMD: "{{ ETCD_DIR }}/etcd --name={{ etcd_name }} --data-dir=/var/lib/etcd/default.etcd --listen-client-urls={{ ETCD_LISTEN_CLIENT_URLS }} --advertise-client-urls={{ ETCD_ADVERTISE_CLIENT_URLS }} --listen-peer-urls={{ ETCD_LISTEN_PEER_URLS }} --initial-cluster={{ ETCD_INITIAL_CLUSTER }} --initial-advertise-peer-urls={{ ETCD_INITIAL_ADVERTISE_PEER_URLS }} --initial-cluster-state={{ ETCD_INITIAL_CLUSTER_STATE }}"
+ETCD1: "10.0.0.5"
+ETCD2: "10.0.0.6"
+ETCD3: "10.0.0.7"
+ETCD_DATA_DIR: "/var/lib/etcd/default.etcd"
+ETCD_LISTEN_PEER_URLS: "http://{{ ansible_ssh_host }}:2380"
+ETCD_LISTEN_CLIENT_URLS: "http://{{ ansible_ssh_host }}:2379,http://localhost:2379"
+ETCD_NAME: "{{ etcd_name }}"
+ETCD_INITIAL_ADVERTISE_PEER_URLS: "http://{{ ansible_ssh_host }}:2380"
+ETCD_ADVERTISE_CLIENT_URLS: "http://{{ ansible_ssh_host }}:2379,http://localhost:2379"
+ETCD_INITIAL_CLUSTER: "etcd1=http://{{ ETCD1 }}:2380,etcd2=http://{{ ETCD2 }}:2380,etcd3=http://{{ ETCD3 }}:2380"
+ETCD_INITIAL_CLUSTER_TOKEN: "etcd-cluster"
+ETCD_INITIAL_CLUSTER_STATE: "new"

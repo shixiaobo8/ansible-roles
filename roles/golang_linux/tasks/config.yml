@@ -1,0 +1,4 @@
+---
+
+- name: config go path env to /etc/profile
+  blockinfile: "path=/etc/profile block={{ go_env }}"

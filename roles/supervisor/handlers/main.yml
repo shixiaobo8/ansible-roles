@@ -1,0 +1,9 @@
+---
+# handlers file for supervisor
+- name: start supervisor
+  service: name=supervisor state=started
+  when: ansible_os_family == 'Debian'
+
+- name: start supervisord
+  service: name=supervisor state=started
+  when: ansible_os_family == 'RedHat'

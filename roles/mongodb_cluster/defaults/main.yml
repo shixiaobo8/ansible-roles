@@ -1,0 +1,5 @@
+---
+# defaults file for mongodb_cluster
+mongodb_version: 4.0.11
+mongodb_download_url: https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-4.0.11.tgz
+soft_dir: /root/softs/

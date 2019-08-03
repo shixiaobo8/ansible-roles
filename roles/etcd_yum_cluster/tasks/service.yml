@@ -1,0 +1,6 @@
+---
+- name: start yum etcd service
+  service: name=etcd state=restarted
+
+- name: add etcd boot service
+  shell: systemctl enable etcd

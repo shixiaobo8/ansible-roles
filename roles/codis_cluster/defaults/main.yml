@@ -1,0 +1,28 @@
+---
+# defaults file for codis_cluster
+codis_git_repo: https://github.com/CodisLabs/codis.git
+codis_install_dir: /usr/local/
+codis_data_dir: /data/redis/data/
+codis_log_dir: /data/redis/log/
+codis_config_dir: /data/redis/config/
+codis_password: "123456"
+codis_cluster_pwd: "123456"
+codis_6379_port: 6379
+codis_6380_port: 6380
+codis_6379_conf: "{{ codis_config_dir }}/redis_6379.conf"
+codis_6380_conf: "{{ codis_config_dir }}/redis_6380.conf"
+codis_proxy_conf: "{{ codis_config_dir }}/proxy.conf"
+codis_product_name: "codis_test"
+codis_product_auth: "123456"
+codis_session_auth: "123456"
+codis_proxy_admin_addr: "{{ ansible_ssh_host }}:11080"
+jodis_name: "zookeeper"
+coordinator_addr: "{{ jodis_addr }}"
+codis_proxy_supervisor_program_name: codis_proxy
+codis_proxy_start_cmd: "{{ codis_install_dir }}/codis/bin/codis-proxy --ncpu= {{ codis_proxy_conf }}"
+gopath: /usr/local/golang/gopath/src/
+codis_gopath: "{{ gopath }}/github.com/CodisLabs"
+codis_gitpath: "github.com/CodisLabs/codis"
+codis_gopath_dir: "{{ gopath }}/github.com/CodisLabs/codis"
+supervisor_rhel7_conf_dir: /etc/supervisord.d/
+supervisor_debian_conf_dir: /etc/supervisor/conf.d/

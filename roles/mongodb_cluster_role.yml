@@ -1,0 +1,6 @@
+---
+
+- hosts: mongodb_cluster
+  remote_user: root
+  roles:
+    - role: mongodb_cluster

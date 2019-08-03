@@ -1,0 +1,7 @@
+---
+
+- name: test go 
+  shell: ". /etc/profile && go version | awk '{print $3}' |cut -b 3-"
+  register: go_version
+
+- debug: msg="{{ go_version }}"

@@ -1,0 +1,12 @@
+---
+
+- name: register mysql
+  shell: "ls {{ mysql_data_dir }} | wc -l"  
+  register: is_data
+- debug: msg="{{ is_data }}"
+
+- name: prepare for mysql init
+  file:  "path={{ mysql_data_dir }}/* state=absent"
+
+- name: mysql init
+  shell: "rm -rf {{ mysql_data_dir }}/* && mysqld --initialize --basedir={{ mysql_base_dir }} --datadir={{ mysql_data_dir }} --user={{ user }} && sed -i 's/#daemonize = on/daemonize = on/g' /etc/my.cnf"

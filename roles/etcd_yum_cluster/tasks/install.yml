@@ -1,0 +1,4 @@
+---
+
+- name: yum install 
+  yum: name=epel-release,etcd state=latest

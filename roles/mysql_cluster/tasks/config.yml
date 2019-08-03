@@ -1,0 +1,7 @@
+---
+
+- name: create mysql.cnf
+  template: "src=my.cnf.j2 dest={{ mysql_conf }}"
+
+- name: create mysql service systemd file
+  template: "src=mysqld.service.j2 dest={{ mysql_systemd_file }}"

@@ -1,0 +1,3 @@
+---
+#user_action_consumer.log tasks file for supervisor
+- include_tasks: supervisor_install.yml

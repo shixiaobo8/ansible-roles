@@ -1,0 +1,12 @@
+---
+# defaults file for zookeeper_cluster
+zookeeper_version: zookeeper-3.4.14
+zookeeper_parent_dir: /usr/local/
+zookeeper_install_dir: "{{ zookeeper_parent_dir }}/{{ zookeeper_version }}"
+zookeeper_log_dir: "{{ zookeeper_install_dir }}/logs/"
+zookeeper_link_dir: "{{ zookeeper_parent_dir }}/zookeeper"
+zookeeper_node1_host: "{{ zk_node1 }} zookeeper-node1"
+zookeeper_node2_host: "{{ zk_node2 }}  zookeeper-node2"
+zookeeper_node3_host: "{{ zk_node3 }}  zookeeper-node3"
+zookeeper_conf: "{{ zookeeper_install_dir }}/conf/zoo.cfg"
+zookeeper_data_dir: /data/zookeeper

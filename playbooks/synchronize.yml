@@ -1,0 +1,10 @@
+---
+
+- hosts: codis
+  remote_user: root
+  tasks:
+    - name: shell demo
+      command: ls /
+    - name: copy nsq install file
+      synchronize: src='/root/softs/nsq-0.3.7-HA.1.9.4.1.linux-amd64.go1.10.8.tar.gz' dest='/root/softs/' mode=push
+    

@@ -1,0 +1,23 @@
+---
+# tasks file for zookeeper_cluster
+- name: check jdk
+  shell: . /etc/profile && java -version 2>&1 |awk 'NR==1{ gsub(/"/,""); print $3 }'
+  register: jdk_version
+  check_mode: no
+  ignore_errors: yes
+- debug: "msg={{ jdk_version }}"
+
+- debug: "msg='jdk 1.8 is exists !'"  
+  when: jdk_version.stdout.find('1.8')
+
+- name: unarchive zookeeper 
+  unarchive: "src=zookeeper-3.4.14.tar.gz dest={{ zookeeper_parent_dir }} creates={{ zookeeper_install_dir }} copy=yes"
+  when: jdk_version.stdout.find('1.8') == 0
+
+- name: create zookeeper data dir
+  file: "path={{ zookeeper_data_dir }}  state=directory"
+  when: jdk_version.stdout.find('1.8') == 0
+
+- name: create zookeeper log dir
+  file: "path={{ zookeeper_log_dir }}  state=directory"
+  when: jdk_version.stdout.find('1.8') == 0

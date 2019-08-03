@@ -1,0 +1,19 @@
+---
+
+- name: create nsqadmin  config
+  template: "src=nsqadmin.cfg.j2 dest={{ nsq_conf_dir }}/nsqadmin.cfg"
+
+- name: create nsqd  config
+  template: "src=nsqd.cfg.j2 dest={{ nsq_conf_dir }}/nsqd.cfg"
+
+- name: create nsqlookupd  config
+  template: "src=nsqlookupd.cfg.j2 dest={{ nsq_conf_dir }}/nsqlookupd.cfg"
+
+- name: create supervisor_nsqadmin  config
+  template: "src=nsqadmin.ini.j2 dest={{ supervisor_dir }}/nsqadmin.ini"
+
+- name: create supervisor_nsqd  config
+  template: "src=nsqd.ini.j2 dest={{ supervisor_dir }}/nsqd.ini"
+
+- name: create supervisor_nsqlookupd  config
+  template: "src=nsqlookupd.ini.j2 dest={{ supervisor_dir }}/nsqlookupd.ini"

@@ -1,0 +1,45 @@
+---
+
+# 定义主机变量组,可以使用python patern 正则匹配主机
+- hosts: codis
+  # 定义远程执行用户
+  remote_user: root
+  # 开启debug
+  gather_facts: no # 关闭debug
+  vars_files:
+    - vars.yml
+  # 定义变量
+  vars:
+    ip: " ip a | grep 10 | grep inet | awk '{print $2}' | awk -F'/' '{print $1}' "
+    hostname: "hostname"
+  # 任务列表
+  tasks:
+    # 子任务 shell
+    - name: shell demo
+      command: ls /
+      register: lsroot
+    
+    # 子任务显示shell 的结果
+    #- name: show root
+    #  debug: var=lsroot.stdout verbosity=0
+
+    - name: show ip
+      shell: "{{ ip }} && {{ hostname }}"
+      register: show_ip
+
+    # 显示 shell debug 结果
+    #- name: show_ip_task
+    #  debug: var=show_ip.stdout_lines verbosity=0
+    
+    # 拷贝文件 使用sync 模块
+    - name: copy nsq install file
+      synchronize: src='/root/softs/nsq-0.3.7-HA.1.9.4.1.linux-amd64.go1.10.8.tar.gz' dest='/root/softs/' mode=push
+
+    # 查看文件state 状态属性
+    - name: file
+      file: path=/root/softs/nsq-0.3.7-HA.1.9.4.1.linux-amd64.go1.10.8.tar.gz state=absent
+
+    # command 模块打印变量
+    - name: print var file variables
+      command: "echo {{ test_var }}  {{ ip_var }} {{codis_var}}"
+      when: test_var   == 6 

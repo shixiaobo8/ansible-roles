@@ -1,0 +1,35 @@
+---
+- name: yum install epel-release 
+  yum: name=epel-release state=latest update_cache=true
+  when: ansible_os_family == 'RedHat'
+
+- name: yum install supervisor
+  yum: name=supervisor state=latest 
+  when: ansible_os_family == 'RedHat'
+  notify: start supervisord
+
+- name: apt install epel-release and supervisor
+  apt: name=supervisor state=latest
+  when: ansible_os_family == 'Debian'
+  notify: start supervisord
+
+- name: restart supervisor
+  service: name=supervisor state=restarted
+  when: ansible_os_family == 'Debian'
+
+- name: restart supervisord
+  service: name=supervisord state=restarted
+  when: ansible_os_family == 'RedHat'
+
+- name: enable boot start supervisor
+  shell: systemctl enable supervisor
+  when: ansible_os_family == 'Debian'
+
+- name: enable boot start supervisord
+  shell: systemctl enable supervisord
+  when: ansible_os_family == 'RedHat'
+#- name: install epel-release
+#  shell: yum -y install epel-release && yum clean all && yum makecache && yum install -y supervisor
+
+#- name: install supervisor
+#  shell: yum cle

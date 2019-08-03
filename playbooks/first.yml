@@ -1,0 +1,10 @@
+---
+# 定义主机
+- hosts: all:!mac_os
+ # 定义用户
+  remote_user: root
+# 定义任务
+  tasks:
+    - name : test ping
+      ping:
+      remote_user: root

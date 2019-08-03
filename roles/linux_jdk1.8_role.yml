@@ -1,0 +1,6 @@
+---
+
+- hosts: all
+  remote_user: root
+  roles:
+    - role: linux_jdk1.8
