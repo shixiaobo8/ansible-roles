@@ -1,0 +1,13 @@
+[program:shard3]
+command={{ shard3_start_cmd }}
+directory={{ mongod_bin_dir }}
+process_name=shard3
+numprocs=1
+priority=990
+stopasgroup=true
+autostart=true
+autorestart=true
+stdout_logfile_maxbytes=40MB
+redirect_stderr=true
+stopsignal=QUIT
+stdout_logfile = /var/log/supervisor/shard3.log

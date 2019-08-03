@@ -1,0 +1,34 @@
+---
+
+- name: restart mongodb supervisord program 
+  shell: supervisorctl reread && supervisorctl update
+
+- name: restart mongo_config supervisor program
+  supervisorctl: 
+    name: mongo_config
+    state: restarted
+
+- name: restart shard1 supervisor program
+  supervisorctl: 
+    name: shard1
+    state: restarted
+
+- name: restart shard2 supervisor program
+  supervisorctl: 
+    name: shard2
+    state: restarted
+
+- name: restart shard3 supervisor program
+  supervisorctl: 
+    name: shard3
+    state: restarted
+
+- name: restart mongos supervisor program
+  supervisorctl: 
+    name: mongos
+    state: restarted
+
+#- name: restart mongodb supervisor program group
+#  supervisorctl: 
+#    name: 'mongodb_cluter_group:'
+#    state: restarted

@@ -11,6 +11,12 @@
   with_items:
     - "{{ mongo_data_dir }}"
     - "{{ mongo_config_dir }}"
+    - "{{ mongo_config_base_dir }}"
+    - "{{ mongos_base_dir }}"
+    - "{{ shard1_base_dir }}"
+    - "{{ shard2_base_dir }}"
+    - "{{ shard3_base_dir }}"
+    - "{{ mongo_config_base_dir }}"
     - "{{ mongo_config_log_dir }}"
     - "{{ mongo_config_data_dir }}"
     - "{{ shard1_data_dir }}"
@@ -38,3 +44,10 @@
 
 - name: create link dir
   file: "path={{ install_dir_name }} src={{ install_dir_name }} dest={{ install_link_dir }} state=link group={{ group }} owner={{ user }}"
+
+- name: create mongodb bin link
+  shell: "ln -sf {{ mongod_bin_dir }}/* /usr/bin/"
+
+- name: install pymongo
+  pip:
+    name: pymongo

@@ -2,4 +2,5 @@
 # tasks file for mongodb_cluster
 - include_tasks: install.yml
 - include_tasks: config.yml
-#- include_tasks: service.yml
+- include_tasks: service.yml
+- include_tasks: shard_cluster.yml

@@ -1,0 +1,29 @@
+---
+# tasks file for python-pip
+- name: install epel
+  yum:
+    name:  epel-release
+    state: latest
+    update_cache: yes
+  when: ansible_os_family == 'RedHat'
+
+- name: install pip need pkgs
+  yum:
+    name: "{{ item }}" 
+    state: latest
+  with_items:
+    -  epel-release 
+    -  python-pip 
+    -  python-virtualenv 
+    -  python-setuptools 
+  when: ansible_os_family == 'RedHat'
+
+- name: create pip conf dir
+  file:
+    path=/root/.pip
+    state=directory
+
+- name: config pip source to china
+  template: 
+    src=pip.conf.j2
+    dest=/root/.pip/pip.conf

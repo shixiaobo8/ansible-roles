@@ -7,11 +7,11 @@
 systemLog:
   destination: file
   logAppend: true
-  path: "{{ mongo_config_log_dir }}"
+  path: {{ mongo_config_log }}
   logRotate: rename
 # Where and how to store data.
 storage:
-  dbPath: "{{ mongo_config_data_dir }}"
+  dbPath: {{ mongo_config_data_dir }}
   journal:
     enabled: true
 #  engine: wiredTiger
@@ -22,12 +22,12 @@ storage:
 
 # how the process runs
 processManagement:
-  fork: true  # fork and run in background
-  pidFilePath: "{{ mongo_config_pid }}"  # location of pidfile
+  fork: false  # fork and run in background
+  pidFilePath: {{ mongo_config_pid }}  # location of pidfile
 
 # network interfaces
 net:
-  port: 21004
+  port: {{ mongo_config_port }}
   bindIp: 0.0.0.0  # Listen to local interface only, comment to listen on all interfaces.
 
 #security:

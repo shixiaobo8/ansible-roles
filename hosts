@@ -37,7 +37,7 @@ codis3 ansible_ssh_host=10.0.0.7 ip_var=7 etcd_name=etcd3 zookeeper_server_id=3 
 codis_var=this is codis cluter server vars
 
 [mysql_cluster]
-centos7
+localhost
 ubuntu16-04
 
 

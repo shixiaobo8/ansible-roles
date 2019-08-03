@@ -7,11 +7,11 @@
 systemLog:
   destination: file
   logAppend: true
-  path: /data/mongo/shard3/log/mongod.log
+  path: {{ shard3_log }}
   logRotate: rename
 # Where and how to store data.
 storage:
-  dbPath: /data/mongo/shard3/data
+  dbPath: {{ shard3_data_dir }}
   journal:
     enabled: true
   engine: wiredTiger
@@ -22,19 +22,19 @@ storage:
 
 # how the process runs
 processManagement:
-  fork: true  # fork and run in background
-  pidFilePath: /data/mongo/shard3/mongod.pid  # location of pidfile
+  fork: false  # fork and run in background
+  pidFilePath: {{ shard3_pid }}  # location of pidfile
 
 # network interfaces
 net:
-  port: 21003
+  port: {{ shard3_port }}
   bindIp: 0.0.0.0  # Listen to local interface only, comment to listen on all interfaces.
 
 
 #security:
-security:
-  authorization: enabled
-  keyFile: /data/mongo/conf/mongo.key
+#security:
+#  authorization: enabled
+#  keyFile: /data/mongo/conf/mongo.key
 #operationProfiling:
 
 #replication:

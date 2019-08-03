@@ -15,4 +15,50 @@
 - name: config mongos config conf 21000
   template: "src=mongos.conf.j2 dest={{ mongos_config }}"
 
+- name: add mongo_config to supervisor for redhat
+  template: "src=mongo_config.ini.j2 dest={{ supervisor_redhat_dir }}/mongo_config.ini"
+  when: ansible_os_family == 'RedHat'
 
+- name: add mongo_config to supervisor for debian
+  template: "src=mongo_config.ini.j2 dest={{ supervisor_debian_dir }}/mongo_config.conf"
+  when: ansible_os_family == 'Debian'
+
+- name: add mongos config to supervisor for redhat
+  template: "src=mongos.ini.j2 dest={{ supervisor_redhat_dir }}/mongos.ini"
+  when: ansible_os_family == 'RedHat'
+
+- name: add mongos config to supervisor for debian
+  template: "src=mongos.ini.j2 dest={{ supervisor_debian_dir }}/mongos.conf"
+  when: ansible_os_family == 'Debian'
+
+- name: add shard1 config to supervisor for redhat
+  template: "src=shard1.ini.j2 dest={{ supervisor_redhat_dir }}/shard1.ini"
+  when: ansible_os_family == 'RedHat'
+
+- name: add shard1 config to supervisor for debian
+  template: "src=shard1.ini.j2 dest={{ supervisor_debian_dir }}/shard1.conf"
+  when: ansible_os_family == 'Debian'
+
+- name: add shard2 config to supervisor for redhat
+  template: "src=shard2.ini.j2 dest={{ supervisor_redhat_dir }}/shard2.ini"
+  when: ansible_os_family == 'RedHat'
+
+- name: add shard2 config to supervisor for debian
+  template: "src=shard2.ini.j2 dest={{ supervisor_debian_dir }}/shard2.conf"
+  when: ansible_os_family == 'Debian'
+
+- name: add shard3 config to supervisor for redhat
+  template: "src=shard3.ini.j2 dest={{ supervisor_redhat_dir }}/shard3.ini"
+  when: ansible_os_family == 'RedHat'
+
+- name: add shard3 config to supervisor for debian
+  template: "src=shard3.ini.j2 dest={{ supervisor_debian_dir }}/shard3.conf"
+  when: ansible_os_family == 'Debian'
+
+#- name: add mongodb_cluster group config to supervisor for redhat
+#  template: "src=mongodb_cluster_group.ini.j2 dest={{ supervisor_redhat_dir }}/mongodb_cluster_group.ini"
+#  when: ansible_os_family == 'RedHat'
+
+#- name: add mongodb_cluster group config to supervisor for debian
+#  template: "src=mongodb_cluster_group.ini.j2 dest={{ supervisor_debian_dir }}/mongodb_cluster_group.conf"
+#  when: ansible_os_family == 'Debian'

@@ -1,0 +1,13 @@
+[program:mongo_config]
+command={{ mongo_config_start_cmd }}
+directory={{ mongod_bin_dir }}
+process_name=mongo_config
+numprocs=1
+priority=990
+stopasgroup=true
+autostart=true
+autorestart=true
+stdout_logfile_maxbytes=40MB
+redirect_stderr=true
+stopsignal=QUIT
+stdout_logfile = /var/log/supervisor/mongo_config.log
