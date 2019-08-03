@@ -23,15 +23,15 @@
 ## 192.168.1.100
 ## 192.168.1.110
 [codis]
-centos7 mongo_config_cluster=config/192.168.2.133:21004,192.168.2.107:21004,192.168.2.104:21004 etcd1=192.168.2.133 etcd2=192.168.2.107 etcd3=192.168.2.104 ansible_ssh_host=192.168.2.133 ip_var=5 etcd_name=etcd1 zookeeper_server_id=1 zk_node1=192.168.2.133 zk_node2=192.168.2.107 zk_node3=192.168.2.104 codis_node1_6379_master='192.168.2.104 6380' codis_node1_6380_master='192.168.2.107 6379' codis_node_name=codis_node1 jodis_addr="192.168.2.133:2181,192.168.2.107:2181,192.168.2.104:2181" codis_dashboard=1
-centos6 mongo_config_cluster=config/192.168.2.133:21004,192.168.2.107:21004,192.168.2.104:21004 etcd1=192.168.2.133 etcd2=192.168.2.107 etcd3=192.168.2.104 ansible_python_interpreter=/usr/local/bin/python3 teransible_ssh_host=192.168.2.107 ip_var=6 etcd_name=etcd2 zookeeper_server_id=2 zk_node1=192.168.2.133 zk_node2=192.168.2.107 zk_node3=192.168.2.104 codis_node1_6379_master='192.168.2.133 6380' codis_node1_6380_master='192.168.2.104 6379' codis_node_name=codis_node1 jodis_addr="192.168.2.133:2181,192.168.2.107:2181,192.168.2.104:2181" codis_dashboard=0
-ubuntu16-04 mongo_config_cluster=config/192.168.2.133:21004,192.168.2.107:21004,192.168.2.104:21004 etcd1=192.168.2.133 etcd2=192.168.2.107 etcd3=192.168.2.104 ansible_ssh_host=192.168.2.104 ip_var=7 etcd_name=etcd3 zookeeper_server_id=3 zk_node1=192.168.2.133 zk_node2=192.168.2.107 zk_node3=192.168.2.104 codis_node1_6379_master='192.168.2.107 6380' codis_node1_6380_master='192.168.2.133 6379' codis_node_name=codis_node1 jodis_addr="192.168.2.133:2181,192.168.2.107:2181,192.168.2.104:2181" codis_dashboard=0
+codis1  mongo_config_cluster=config/10.0.0.5:21004,10.0.0.6:21004,10.0.0.7:21004 etcd1=10.0.0.5 etcd2=10.0.0.6 etcd3=10.0.0.7 ansible_ssh_host=10.0.0.5 ip_var=5 etcd_name=etcd1 zookeeper_server_id=1 zk_node1=10.0.0.5 zk_node2=10.0.0.6 zk_node3=10.0.0.7 codis_node1_6379_master='10.0.0.7 6380' codis_node1_6380_master='10.0.0.6 6379' codis_node_name=codis_node1 jodis_addr="10.0.0.5:2181,10.0.0.6:2181,10.0.0.7:2181" codis_dashboard=1
+codis2 mongo_config_cluster=config/10.0.0.5:21004,10.0.0.6:21004,10.0.0.7:21004 etcd1=10.0.0.5 etcd2=10.0.0.6 etcd3=10.0.0.7 ansible_ssh_host=10.0.0.6 ip_var=6 etcd_name=etcd2 zookeeper_server_id=2 zk_node1=10.0.0.5 zk_node2=10.0.0.6 zk_node3=10.0.0.7 codis_node1_6379_master='10.0.0.5 6380' codis_node1_6380_master='10.0.0.7 6379' codis_node_name=codis_node1 jodis_addr="10.0.0.5:2181,10.0.0.6:2181,10.0.0.7:2181" codis_dashboard=0
+codis3 mongo_config_cluster=config/10.0.0.5:21004,10.0.0.6:21004,10.0.0.7:21004 etcd1=10.0.0.5 etcd2=10.0.0.6 etcd3=10.0.0.7 ansible_ssh_host=10.0.0.7 ip_var=7 etcd_name=etcd3 zookeeper_server_id=3 zk_node1=10.0.0.5 zk_node2=10.0.0.6 zk_node3=10.0.0.7 codis_node1_6379_master='10.0.0.6 6380' codis_node1_6380_master='10.0.0.5 6379' codis_node_name=codis_node1 jodis_addr="10.0.0.5:2181,10.0.0.6:2181,10.0.0.7:2181" codis_dashboard=0
 
 
 [codis-cluster]
-centos7 ansible_ssh_host=192.168.2.133 ip_var=5 etcd_name=etcd1 zookeeper_server_id=1 zk_node1=192.168.2.133 zk_node2=192.168.2.107 zk_node3=192.168.2.104 codis_node1_6379_master='192.168.2.104 6380' codis_node1_6380_master='192.168.2.107 6379' codis_node_name=codis_node1 jodis_addr="192.168.2.133:2181,192.168.2.107:2181,192.168.2.104:2181" codis_dashboard=1
-centos6 ansible_ssh_host=192.168.2.107 ip_var=6 etcd_name=etcd2 zookeeper_server_id=2 zk_node1=192.168.2.133 zk_node2=192.168.2.107 zk_node3=192.168.2.104 codis_node1_6379_master='192.168.2.133 6380' codis_node1_6380_master='192.168.2.104 6379' codis_node_name=codis_node1 jodis_addr="192.168.2.133:2181,192.168.2.107:2181,192.168.2.104:2181" codis_dashboard=0
-ubuntu16-04 ansible_ssh_host=192.168.2.104 ip_var=7 etcd_name=etcd3 zookeeper_server_id=3 zk_node1=192.168.2.133 zk_node2=192.168.2.107 zk_node3=192.168.2.104 codis_node1_6379_master='192.168.2.107 6380' codis_node1_6380_master='192.168.2.133 6379' codis_node_name=codis_node1 jodis_addr="192.168.2.133:2181,192.168.2.107:2181,192.168.2.104:2181" codis_dashboard=0
+codis1 ansible_ssh_host=10.0.0.5 ip_var=5 etcd_name=etcd1 zookeeper_server_id=1 zk_node1=10.0.0.5 zk_node2=10.0.0.6 zk_node3=10.0.0.7 codis_node1_6379_master='10.0.0.7 6380' codis_node1_6380_master='10.0.0.6 6379' codis_node_name=codis_node1 jodis_addr="10.0.0.5:2181,10.0.0.6:2181,10.0.0.7:2181" codis_dashboard=1
+codis2 ansible_ssh_host=10.0.0.6 ip_var=6 etcd_name=etcd2 zookeeper_server_id=2 zk_node1=10.0.0.5 zk_node2=10.0.0.6 zk_node3=10.0.0.7 codis_node1_6379_master='10.0.0.5 6380' codis_node1_6380_master='10.0.0.7 6379' codis_node_name=codis_node1 jodis_addr="10.0.0.5:2181,10.0.0.6:2181,10.0.0.7:2181" codis_dashboard=0
+codis3 ansible_ssh_host=10.0.0.7 ip_var=7 etcd_name=etcd3 zookeeper_server_id=3 zk_node1=10.0.0.5 zk_node2=10.0.0.6 zk_node3=10.0.0.7 codis_node1_6379_master='10.0.0.6 6380' codis_node1_6380_master='10.0.0.5 6379' codis_node_name=codis_node1 jodis_addr="10.0.0.5:2181,10.0.0.6:2181,10.0.0.7:2181" codis_dashboard=0
 
 [codis:vars]
 codis_var=this is codis cluter server vars
@@ -46,7 +46,7 @@ ubuntu16-04
 #redhat5
 
 [ubuntu]
-ubuntu16-04 ansible_ssh_host=192.168.2.104
+ubuntu16-04 ansible_ssh_host=10.0.0.7
 
 #[windows]
 #dev_windows ansible_ssh_host=10.0.0.2 ansible_remote_user='yunwei' ansible_ssh_pass='Xj@yunwei123' ansible_ssh_port=22

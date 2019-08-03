@@ -10,6 +10,7 @@
     force: no
     validate_certs: no
   delegate_to: localhost
+  when: not golang_store_name is exists
 
 - name: scp golang software to remote host
   synchronize: "src=/root/softs/{{ golang_soft_name }} dest=/root/softs/ mode=push"
@@ -18,7 +19,7 @@
   unarchive: "src=/root/softs/{{ golang_soft_name }} dest=/usr/local/ creates={{ golang_soft_dir }} copy=no"
 
 - name: mv golang path name
-  file: "src={{ golang_soft_dir }} dest={{ goroot }} path={{ goroot }} state=link" 
+  file: "src={{ golang_soft_dir }} dest={{ goroot }} path={{ goroot }} state=link follow=yes force=yes" 
 
 - name: create golang gopath dir
   file: "path={{ item }} state=directory"

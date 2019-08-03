@@ -3,6 +3,7 @@
 golang_version: go1.12.7
 golang_download_url: https://studygolang.com/dl/golang/go1.12.7.linux-amd64.tar.gz
 golang_soft_name: go1.12.7.linux-amd64.tar.gz
+golang_store_name: /root/softs/go1.12.7.linux-amd64.tar.gz
 golang_soft_dir: /usr/local/go
 goroot: /usr/local/golang
 gopath: /usr/local/golang/gopath

@@ -30,4 +30,4 @@
   unarchive: "src={{ etcd_store_name }} dest={{ INSTALL_DIR }} copy=no"
 
 - name: link etcd dir
-  file: "path={{ ETCD_INSTALL_DIR }} state=link src={{ ETCD_INSTALL_DIR }} dest={{ etcd_link_dir }}"
+  file: "path={{ ETCD_INSTALL_DIR }} state=link src={{ ETCD_INSTALL_DIR }} dest={{ etcd_link_dir }} follow=yes force=yes"
