@@ -3,15 +3,24 @@
 - name: check and create soft dir
   file: path=/root/softs/ state=directory
 
-- name: download golang 
-  get_url: "url={{ golang_download_url }} dest=/root/softs/ force=yes"
+- name: download golang  to only  local for profile
+  get_url: 
+    url: "{{ golang_download_url }}"
+    dest: /root/softs/
+    force: no
+    validate_certs: no
+  delegate_to: localhost
+
+- name: scp golang software to remote host
+  synchronize: "src=/root/softs/{{ golang_soft_name }} dest=/root/softs/ mode=push"
 
 - name: unarchive golang soft 
   unarchive: "src=/root/softs/{{ golang_soft_name }} dest=/usr/local/ creates={{ golang_soft_dir }} copy=no"
 
 - name: mv golang path name
-  shell: " mv {{ golang_soft_dir }} {{ goroot }}"
-  when: golang_soft_dir is exists and goroot is not exists
+  file: "src={{ golang_soft_dir }} dest={{ goroot }} path={{ goroot }} state=link" 
 
 - name: create golang gopath dir
-  file: "path={{ gopath }} state=directory"
+  file: "path={{ item }} state=directory"
+  with_items:
+    - "{{ gopath }}"
