@@ -42,6 +42,12 @@
 
 - name: config zabbix_server conf
   template:
+    src: zabbix_agentd.userparams.conf.j2
+    dest: "/usr/local/zabbix/etc/zabbix_agentd.userparams.conf"
+    backup: yes
+
+- name: config zabbix_server conf
+  template:
     src: zabbix_server.conf.j2
     dest: "{{ zabbix_server_conf }}"
     backup: yes

@@ -1,38 +1,44 @@
-Role Name
+zabbix server role 安装
 =========
+[toc]
 
-A brief description of the role goes here.
 
-Requirements
+注意事项说明
 ------------
+```
+	1. 由于安装zabbix-java 因此请安装 先执行 jdk1.8 roles
+	2. 依赖包 mysql 未包含在程序中需要手动 先执行  zabbix 的mysql 数据库重要配置信息在其中 mysql 密码变量请务必配置正确
+ 	3. 其他依赖 tengine_source / php7  已经导入roles中
+```
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
-
-Role Variables
+role 变量说明:
 --------------
+|变量名称|变量说明|
+|-------|------|
+|zabbix_download_url|zabbix下载地址|
+|zabbix_dingding_url|zabbix 钉钉告警机器人配置信息|
+|zabbix_server_ip|zabbix服务器ip地址|
+|zabbix_web_url|zabbix web 访问地址|
+|zabbix_server_mysql_host|zabbix mysql 主机|
+|zabbix_server_mysql_root_pwd|zabbix mysql root 用户密码|
+|zabbix_mail_user|邮件告警地址|
+......
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
 
-Dependencies
-------------
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
-
-Example Playbook
+执行示例
 ----------------
+     ansible-playbook zabbix_server_roles.yml 
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
-
-    - hosts: servers
+    - hosts: codis2
+      remote_user: root
       roles:
-         - { role: username.rolename, x: 42 }
+        #- role: linux_jdk1.8
+        - role: tengine_source
+        - role: php7
+        - role: zabbix_server
 
-License
+
+作者
 -------
-
-BSD
-
-Author Information
-------------------
-
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+yiguo.shi 2019.8.7

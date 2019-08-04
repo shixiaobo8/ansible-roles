@@ -1,9 +1,9 @@
 ---
 
-- hosts: localhost
+- hosts: codis3
   remote_user: root
   roles:
     #- role: linux_jdk1.8
     #- role: tengine_source
-    #- role: php7
+    - role: php7
     - role: zabbix_server

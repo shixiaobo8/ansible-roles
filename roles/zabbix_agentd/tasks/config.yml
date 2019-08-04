@@ -1,0 +1,45 @@
+---
+
+- name: cp init server script to init.d
+  synchronize:
+    src: "{{ soft_dir }}/{{ zabbix_version }}/misc/init.d/fedora/core/zabbix_server"
+    dest: /etc/init.d/
+    mode: push
+
+- name: cp init agentd script to init.d
+  synchronize:
+    src: "{{ soft_dir }}/{{ zabbix_version }}/misc/init.d/fedora/core/zabbix_agentd"
+    dest: /etc/init.d/
+    mode: push
+
+- name: config zabbix_agentd conf
+  template:
+    src: zabbix_agentd.conf.j2
+    dest: "{{ zabbix_agentd_conf }}"
+    backup: yes
+
+- name: config zabbix_server conf
+  template:
+    src: zabbix_agentd.userparams.conf.j2
+    dest: "/usr/local/zabbix/etc/zabbix_agentd.userparams.conf"
+    backup: yes
+
+- name: config tcp_conn_status script
+  template:
+    src: tcp_conn_status.sh.j2
+    dest: "{{ zabbix_scripts_dir }}/tcp_conn_status.sh.j2"
+    backup: yes
+    mode: 1777
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    force: yes
+
+- name: config tcp_conn_status agentd conf
+  template:
+    src: tcp-status-params.conf.j2
+    dest: "{{ zabbix_install_dir }}/etc/zabbix_agentd.conf.d/tcp-status-params.conf.j2"
+    backup: yes
+    mode: 1777
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    force: yes

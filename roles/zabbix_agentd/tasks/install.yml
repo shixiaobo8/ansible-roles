@@ -41,19 +41,3 @@
 
 - name: config and make and make install
   shell: "chdir={{ soft_dir }}/{{ zabbix_version }}/ . /etc/profile && {{ config_cmd }}"
-
-- name: check web dir
-  file:
-    path: "{{ zabbix_web_dir }}"
-    state: directory
-    owner: www
-    group:  www
-
-- name: cp php foranted to web dir
-  synchronize: 
-    src: "{{ soft_dir }}/{{ zabbix_version }}/frontends/php"
-    dest: "{{ zabbix_web_dir }}/"
-
-- name: mv zabbix web dir name
-  shell: "mv {{ zabbix_web_dir }}/php {{ zabbix_php_dir }}"
-  when: not zabbix_php_dir is directory

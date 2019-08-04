@@ -1,0 +1,35 @@
+---
+# defaults file for zabbix_server
+zabbix_version: zabbix-4.0.11
+zabbix_download_url: https://nchc.dl.sourceforge.net/project/zabbix/ZABBIX%20Latest%20Stable/4.0.11/zabbix-4.0.11.tar.gz
+soft_dir: /root/softs/
+zabbix_install_dir: /usr/local/zabbix/
+zabbix_store_name: "{{ soft_dir }}/{{ zabbix_version }}.tar.gz"
+user: zabbix
+group: zabbix
+config_cmd: "./configure --prefix={{ zabbix_install_dir }} --enable-server --enable-agent --with-mysql --with-net-snmp --with-libcurl --with-libxml2 --enable-proxy --enable-java --enable-ipv6 && make && make install"
+zabbix_web_dir: /www/web/
+zabbix_php_dir: "{{ zabbix_web_dir }}/zabbix"
+tengine_vhost_dir: /usr/local/tengine/conf/vhost/
+nginx_vhost_dir: /usr/local/nginx/conf/vhost/
+zabbix_php_domain: localhost
+zabbix_php_port: 18989
+test_url: "http://{{ ansible_ssh_host }}:{{ zabbix_php_port }}"
+zabbix_server_conf: /usr/local/zabbix/etc/zabbix_server.conf
+zabbix_agentd_conf: /usr/local/zabbix/etc/zabbix_agentd.conf
+zabbix_server_port: 10051
+zabbix_agent_port: 10050
+zabbix_server_ip: 10.0.0.9
+zabbix_server_mysql_host: "{{ ansible_ssh_host }}"
+zabbix_server_mysql_root_pwd: 123456
+zabbix_server_mysql_db: zabbix
+zabbix_server_mysql_user: zabbix
+zabbix_web_url: "{{ test_url }}"
+zabbix_server_mysql_pwd: Zbx!mysql123#
+zabbix_scripts_dir: /usr/local/zabbix/share/zabbix/alertscripts/
+zabbix_dingding_url: https://oapi.dingtalk.com/robot/send?access_token=366aa022ece9892c528ac896b7ab61a332107739ea1d46d3946750876b305808
+zabbix_mail_smtp_host: smtp.163.com
+zabbix_mail_smtp_port: 465
+zabbix_mail_user: devops90@163.com
+zabbix_mail_pwd: MYdevops89
+zabbix_email_script: "{{ zabbix_scripts_dir }}/sendmail.py"
