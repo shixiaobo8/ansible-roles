@@ -1,6 +1,8 @@
 ---
 # defaults file for zookeeper_cluster
 zookeeper_version: zookeeper-3.4.14
+zookeeper_store_name: "/root/softs/{{ zookeeper_version  }}.tar.gz"
+zookeeper_download_url: http://mirror.bit.edu.cn/apache/zookeeper/zookeeper-3.4.14/zookeeper-3.4.14.tar.gz
 zookeeper_parent_dir: /usr/local/
 zookeeper_install_dir: "{{ zookeeper_parent_dir }}/{{ zookeeper_version }}"
 zookeeper_log_dir: "{{ zookeeper_install_dir }}/logs/"

@@ -10,8 +10,16 @@
 - debug: "msg='jdk 1.8 is exists !'"  
   when: jdk_version.stdout.find('1.8')
 
+- name: download zookeeper
+  get_url:
+    url: "{{ zookeeper_download_url }}"
+    dest: /root/softs/
+    validate_certs: no
+  delegate_to: localhost
+  when: not zookeeper_store_name is exists
+
 - name: unarchive zookeeper 
-  unarchive: "src=zookeeper-3.4.14.tar.gz dest={{ zookeeper_parent_dir }} creates={{ zookeeper_install_dir }} copy=yes"
+  unarchive: "src={{ zookeeper_store_name }} dest={{ zookeeper_parent_dir }} creates={{ zookeeper_install_dir }} copy=yes"
   when: jdk_version.stdout.find('1.8') == 0
 
 - name: create zookeeper data dir

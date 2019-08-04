@@ -10,10 +10,10 @@
    
   #  - debug: msg="{{ go_version }}"
   roles:
-    - role: linux_jdk1.8
-    - role: supervisor
-    - role: zookeeper_cluster
-    - role: etcd_source_cluster
-    - role: golang_linux
+   # - role: linux_jdk1.8
+   # - role: supervisor
+   # - role: zookeeper_cluster
+   # - role: etcd_source_cluster
+   # - role: golang_linux
  #     when: go_version.rc != 0
     - role: codis_cluster

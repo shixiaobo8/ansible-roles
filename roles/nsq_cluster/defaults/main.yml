@@ -1,15 +1,18 @@
 cluster_id: "im-nsq-cluster-1"
 cluster_leadership_addresses: "http://10.0.0.5:2379,http://10.0.0.6:2379,http://10.0.0.7:2379"
+nsq_ha_download_url: https://github.com/youzan/nsq/releases/download/v0.3.7-HA.1.9.4.1/nsq-0.3.7-HA.1.9.4.1.linux-amd64.go1.10.8.tar.gz
 nsq_data_path: /data/nsq/data
 nsqd_log_dir: "/data/nsq/logs/nsqd"
 nsqlookupd_log_dir: "/data/nsq/logs/nsqlookupd"
 nsqadmin_log_dir: "/data/nsq/logs/nsqadmin"
 soft_dir: /root/softs/
+nsq_store_name: "{{ soft_dir }}/nsq-0.3.7-HA.1.9.4.1.linux-amd64.go1.10.8.tar.gz"
 nsq_install_dir: /usr/local/
 nsq_dir: /usr/local/nsq-0.3.7-HA.1.9.4.1.linux-amd64.go1.10.8
 nsq_conf_dir: /data/nsq/conf
 nsq_supervisor_program_name: nsq
-supervisor_dir: /etc/supervisord.d
+supervisor_redhat_dir: /etc/supervisord.d
+supervisor_debian_dir: /etc/supervisor/conf.d/
 nsqlookupd_command: "{{ nsq_dir }}/bin/nsqlookupd -config={{ nsq_conf_dir }}/nsqlookupd.cfg"
 nsqd_command: "{{ nsq_dir }}/bin/nsqd -config={{ nsq_conf_dir }}/nsqd.cfg"
 nsqadmin_command: "{{ nsq_dir }}/bin/nsqadmin -config={{ nsq_conf_dir }}/nsqadmin.cfg"
