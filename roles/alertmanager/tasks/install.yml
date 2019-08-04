@@ -1,0 +1,52 @@
+---
+
+- name: download alertmanager
+  delegate_to: localhost
+  get_url:
+    url: "{{ alertmanager_download_url }}"
+    validate_certs: no
+    dest: "{{ soft_dir }}"
+  when: not alertmanager_store_name is exists
+
+- name: scp soft
+  synchronize:
+    src: "{{ alertmanager_store_name }}"
+    dest: "{{ soft_dir }}"
+    mode: push
+
+- name: unarchive soft
+  unarchive:
+    src: "{{ alertmanager_store_name }}"
+    dest: "{{ alertmanager_install_dir }}"
+
+- name: link dir alertmanager
+  file:
+    state: link
+    path: "{{ alertmanager_install_name }}"
+    src: "{{ alertmanager_install_name }}"
+    dest: "{{ alertmanager_link_dir }}"
+    force: yes
+    follow: yes
+
+- name: create alertmanager need dir
+  file:
+    state: directory
+    path: "{{ item }}"
+    force: yes
+    follow: yes
+  with_items:
+      - "{{ alertmanager_data_dir }}"
+      - "{{ alertmanager_log_dir }}"
+      - "{{ flask_dingding_install_dir }}"
+      - "{{ supervisor_log_dir  }}"
+
+- name: config templates config
+  synchronize: 
+    src: files/templates
+    dest: "{{ alertmanager_template_dir }}/"
+    mode: push
+
+- name: pip install flask
+  pip:
+    name: ['flask','requests']
+

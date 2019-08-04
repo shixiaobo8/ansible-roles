@@ -1,9 +1,25 @@
 ---
 # defaults file for prometheus
 soft_dir: /root/softs/
-prometheus_version: 2.11.1
+prometheus_version: prometheus-2.11.1
 prometheus_download_url: "https://github.com/prometheus/prometheus/releases/download/v2.11.1/prometheus-{{ prometheus_version }}.linux-amd64.tar.gz"
 prometheus_store_name: "{{ soft_dir }}/{{ prometheus_version }}.linux-amd64.tar.gz" 
 prometheus_install_dir: /opt/
-prometheus_install_name: "{{ prometheus_install_dir }}/{{ prometheus_version,linux-amd64 }}"
-promethues_link_dir: /opt/prometheus
+prometheus_install_name: "{{ prometheus_install_dir }}{{ prometheus_version }}.linux-amd64"
+prometheus_link_dir: /opt/prometheus
+prometheus_log_dir: "{{ prometheus_link_dir }}/logs/"
+prometheus_rule_conf_dir: "{{ prometheus_link_dir }}/rules.d"
+prometheus_node_conf_dir: "{{ prometheus_link_dir }}/conf.d"
+prometheus_main_conf: "{{ prometheus_link_dir }}/prometheus.yml"
+prometheus_node_conf: "{{ prometheus_node_conf_dir }}/linux-nodes.json"
+prometheus_rule_conf1: "{{ prometheus_rule_conf_dir }}/linux_nodes.rules"
+prometheus_rule_conf2: "{{ prometheus_link_dir }}/first.rules"
+alertmanager_port: 9093
+alertmanager_domain_url: "{{ ansible_ssh_host }}:{{ alertmanager_port }}"
+local_node_domain: "{{ ansible_hostname }}"
+local_node_port: 9100
+prometheus_data_dir: "{{ prometheus_link_dir }}/data"
+prometheus_bin: "{{ prometheus_link_dir }}/prometheus"
+prometheus_start_cmd: "{{ prometheus_bin }} --config.file={{ prometheus_main_conf }} --storage.tsdb.path={{ prometheus_data_dir }} --storage.tsdb.retention.time=60d --log.level=debug"
+supervisor_redhat_dir: /etc/supervisord.d/
+supervisor_debian_dir: /etc/supervisor/conf.d/

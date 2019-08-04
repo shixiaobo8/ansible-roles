@@ -1,5 +1,5 @@
 ---
-# tasks file for prometheus
+# tasks file for alertmanager
 - include_tasks: install.yml
 - include_tasks: config.yml
 - include_tasks: service.yml

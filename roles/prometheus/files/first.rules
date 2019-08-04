@@ -1,0 +1,29 @@
+groups:
+- name: example
+  rules:
+  - alert: HighErrorRate
+    expr: job:request_latency_seconds:mean5m{job="myjob"} > 0.5
+    for: 10m
+    labels:
+      severity: page
+    annotations:
+      summary: High request latency
+      description: description info
+  
+  - alert: InstanceDown
+    expr: up == 0
+    for: 1m
+    labels:
+      severity: page
+    annotations:
+      summary: "Instance {{ $labels.instance }} down"
+      description: "{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 5 minutes."
+
+  - alert: diskusageFreeLow
+    expr: 100 - ((node_filesystem_avail_bytes{instance=~"$node",mountpoint="/",fstype=~"ext4|xfs"} * 100) / node_filesystem_size_bytes {instance=~"$node",mountpoint="/",fstype=~"ext4|xfs"}) > 90
+    for: 1m
+    labels:
+      severity: page
+    annotations:
+      summary: "磁盘使用率大于90%"
+      description: "磁盘使用率已经大于90%"

@@ -1,0 +1,30 @@
+---
+# handlers file for alertmanager
+
+- name: reread_and_update_supervisor_redhat
+  supervisorctl:
+    state: present
+    name: alertmanager
+    config: "{{ supervisor_redhat_dir }}/alertmanager.ini"
+  when: ansible_ssh_host == 'RedHat'
+
+- name: reread_and_update_supervisor_debian
+  supervisorctl:
+    state: present
+    name: alertmanager
+    config: "{{ supervisor_redhat_dir }}/alertmanager.ini"
+  when: ansible_ssh_host == 'Debian'
+
+- name: reread_and_update_supervisor_redhat
+  supervisorctl:
+    state: present
+    name: flask-dinding-webhook
+    config: "{{ supervisor_redhat_dir }}/dingding-talk-flask.ini"
+  when: ansible_ssh_host == 'RedHat'
+
+- name: reread_and_update_supervisor_debian
+  supervisorctl:
+    state: present
+    name: flask-dinding-webhook
+    config: "{{ supervisor_redhat_dir }}/dingding-talk-flask.ini"
+  when: ansible_ssh_host == 'Debian'

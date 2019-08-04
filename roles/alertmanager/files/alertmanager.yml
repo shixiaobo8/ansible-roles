@@ -1,0 +1,46 @@
+global:
+  resolve_timeout: 5m
+  smtp_smarthost: 'smtp.163.com:465'
+  smtp_from: 'devops90@163.com'
+  smtp_auth_username: 'devops90@163.com'
+  smtp_auth_identity: 'Mydevops89'
+  smtp_auth_password: 'Mydevops89'
+  smtp_require_tls: false
+
+templates:
+  - /opt/alertmanager/templates/*.tmpl
+
+route:
+  receiver: 'email-webhook'
+  group_by: ['alertname','group']
+  group_wait: 10s
+  group_interval: 10s
+  repeat_interval: 1h
+  routes:
+  - match_re:
+      # service: ^(buddy|group|mediaproxy|gateway|usercenter|msgcenter|region|regionv2)$
+      service: .*
+      receiver: 'email-webhook'
+  - receiver: 'email-webhook'
+
+receivers:
+- name: 'email-webhook'
+  email_configs:
+  - to: 'devops90@163.com'
+    send_resolved: true
+    html: '{{ template "alert_email.html" . }}'
+    headers: { Subject: "prometheus  邮件告警" }
+  - to: 'devops90@163.com'
+    send_resolved: true
+    html: '{{ template "alert_email.html" . }}'
+    headers: { Subject: "prometheus  邮件告警" }
+  webhook_configs:
+  - url: 'http://localhost:8061'
+    send_resolved: true
+
+inhibit_rules:
+  - source_match:
+      severity: 'critical'
+    target_match:
+      severity: 'warning'
+    equal: ['alertname', 'dev', 'instance']

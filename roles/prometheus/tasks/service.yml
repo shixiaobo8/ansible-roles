@@ -1,0 +1,8 @@
+---
+
+- name: restart supevisor program prometheus
+  supervisorctl:
+    name: prometheus
+    state: restarted
+    
+    

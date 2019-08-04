@@ -1,0 +1,27 @@
+---
+
+- name: config promethues config
+  template: 
+    src: prometheus.yml.j2
+    dest: "{{ prometheus_main_conf }}"
+
+- name: config promethues node config
+  template: 
+    src: linux-nodes.json.j2
+    dest: "{{ prometheus_node_conf }}"
+
+- name: add prometheus to supervisor for redhat
+  template:
+    src: prometheus.ini.j2
+    dest: "{{ supervisor_redhat_dir }}/prometheus.ini"
+  notify:
+    reread_and_update_supervisor_redhat
+  when: ansible_os_family == 'RedHat'
+
+- name: add prometheus to supervisor for debian
+  template:
+    src: prometheus.ini.j2
+    dest: "{{ supervisor_debian_dir }}/prometheus.ini"
+  notify:
+    reread_and_update_supervisor_debian
+  when: ansible_os_family == 'Debian'

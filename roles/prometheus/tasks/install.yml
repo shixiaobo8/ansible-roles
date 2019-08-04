@@ -22,6 +22,31 @@
 - name: link dir prometheus
   file:
     state: link
+    path: "{{ prometheus_install_name }}"
     src: "{{ prometheus_install_name }}"
     dest: "{{ prometheus_link_dir }}"
+    force: yes
+    follow: yes
 
+- name: create prometheus need dir
+  file:
+    state: directory
+    path: "{{ item }}"
+    force: yes
+    follow: yes
+  with_items:
+      - "{{ prometheus_rule_conf_dir }}"
+      - "{{ prometheus_node_conf_dir }}"
+      - "{{ prometheus_data_dir }}"
+      - "{{ prometheus_log_dir }}"
+
+- name: config promethues rule config1
+  synchronize: 
+    src: files/linux_nodes.rules
+    dest: "{{ prometheus_rule_conf_dir }}/"
+    mode: push
+
+- name: config promethues rule config2
+  synchronize: 
+    src: files/first.rules
+    dest: "{{ prometheus_rule_conf_dir }}/"

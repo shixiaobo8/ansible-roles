@@ -1,0 +1,26 @@
+---
+# defaults file for alertmanager
+soft_dir: /root/softs/
+alertmanager_version: alertmanager-0.18.0.linux-amd64
+alertmanager_download_url: "https://github.com/prometheus/alertmanager/releases/download/v0.18.0/{{ alertmanager_version }}.tar.gz"
+alertmanager_store_name: "{{ soft_dir }}/{{ alertmanager_version }}.tar.gz" 
+alertmanager_install_dir: /opt/
+alertmanager_install_name: "{{ alertmanager_install_dir }}{{ alertmanager_version }}"
+alertmanager_link_dir: /opt/alertmanager
+alertmanager_log_dir: "{{ alertmanager_link_dir }}/logs/"
+alertmanager_data_dir: "{{ alertmanager_link_dir }}/data/"
+alertmanager_template_dir: "{{ alertmanager_link_dir }}/templates/"
+alertmanager_main_conf: "{{ alertmanager_link_dir }}/alertmanager.yml"
+alertmanager_bin: "{{ alertmanager_link_dir }}/alertmanager"
+alertmanager_start_cmd: "{{ alertmanager_bin }} --config.file={{ alertmanager_main_conf }} --log.level=debug"
+supervisor_redhat_dir: /etc/supervisord.d/
+supervisor_debian_dir: /etc/supervisor/conf.d/
+supervisor_log_dir: /var/log/supervisor/logs
+alertmanager_email_smtp_host: 'smtp.163.com'
+alertmanager_email_user: 'devops90@163.com'
+alertmanager_email_pwd: 'Mydevops89'
+flask_dingding_install_dir: /opt/flask-dinding-webhook
+flask_dingding_run_cmd: "/usr/bin/python {{ flask_dingding_install_dir }}/run.py"
+flask_dingding_proxy_port: 8061
+flask_dingding_proxy_url: "http://{{ ansible_ssh_host }}:{{ flask_dingding_proxy_port }}"
+dingding_webhook_url: 'https://oapi.dingtalk.com/robot/send?access_token=366aa022ece9892c528ac896b7ab61a332107739ea1d46d3946750876b305808'

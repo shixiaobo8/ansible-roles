@@ -1,0 +1,9 @@
+---
+
+- name: restart supevisor program alertmanager
+  supervisorctl:
+    name: "{{ item }}"
+    state: restarted
+  with_items:
+    - alertmanager
+    - flask-dinding-webhook

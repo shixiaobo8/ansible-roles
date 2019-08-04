@@ -1,0 +1,44 @@
+---
+
+- name: config dingding flask py proxy script
+  template: 
+    src: run.py.j2
+    dest: "{{ flask_dingding_install_dir }}/run.py"
+
+- name: config alertmanager config
+  synchronize: 
+    src: alertmanager.yml
+    dest: "{{ alertmanager_main_conf }}"
+    mode: push
+
+- name: add flask-dingding to supervisor for redhat
+  template:
+    src: alertmanager.ini.j2
+    dest: "{{ supervisor_redhat_dir }}/alertmanager.ini"
+  notify:
+    reread_and_update_supervisor_redhat
+  when: ansible_os_family == 'RedHat'
+
+- name: add flask-dingding to supervisor for debian
+  template:
+    src: alertmanager.ini.j2
+    dest: "{{ supervisor_debian_dir }}/alertmanager.ini"
+  notify:
+    reread_and_update_supervisor_debian
+  when: ansible_os_family == 'Debian'
+
+- name: add flask dingding to supervisor for redhat
+  template:
+    src: dingding-talk-flask.ini.j2
+    dest: "{{ supervisor_redhat_dir }}/dingding-talk-flask.ini"
+  notify:
+    reread_and_update_supervisor_redhat
+  when: ansible_os_family == 'RedHat'
+
+- name: add alertmanager to supervisor for debian
+  template:
+    src: dingding-talk-flask.ini.j2
+    dest: "{{ supervisor_debian_dir }}/dingding-talk-flask.ini"
+  notify:
+    reread_and_update_supervisor_debian
+  when: ansible_os_family == 'Debian'
