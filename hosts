@@ -48,7 +48,7 @@ codis_var=this is codis cluter server vars
 #ubuntu16-04
 
 [localhost]
-localhost
+localhost ansible_ssh_host=10.0.0.9
 #[redhat]
 #redhat5
 

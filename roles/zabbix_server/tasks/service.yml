@@ -1,0 +1,24 @@
+---
+
+- name: create libmysqlclient.so.20
+  file:
+    src: /usr/local/mysql/lib/libmysqlclient.so.20 
+    dest: /usr/lib64/libmysqlclient.so.20
+    state: link
+
+- name: config zabbix_server start init script
+  lineinfile: 
+    path: "{{ item }}"
+    line: BASEDIR=/usr/local/zabbix
+    regexp: BASEDIR=/usr/local
+    mode: 1777
+    create: yes
+  with_items:
+    - /etc/init.d/zabbix_server
+    - /etc/init.d/zabbix_agentd
+
+- name: restart zabbix_server
+  shell: "chkconfig zabbix_server on && /etc/init.d/zabbix_server restart"
+
+- name: restart zabbix_agentd
+  shell: "chkconfig zabbix_agentd on && /etc/init.d/zabbix_agentd restart"

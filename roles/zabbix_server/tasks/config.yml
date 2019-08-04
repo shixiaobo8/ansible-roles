@@ -1,0 +1,97 @@
+---
+
+
+- name: config tengine zabbix config
+  template:
+    src: zabbix.conf.j2
+    dest: "{{ tengine_vhost_dir }}/{{ zabbix_php_domain }}.zabbix.conf"
+  when: tengine_vhost_dir is exists
+
+- name: register tengine conf
+  shell: /usr/local/tengine/sbin/nginx -t 2>&1 | grep ok | wc -l
+  register: tengine_conf_is_ok
+
+- name:  reload nginx
+  shell: /usr/local/nginx/sbin/nginx -t 2>&1 | grep ok | wc -l
+  register: tengine_is_running
+  when: tengine_conf_is_ok.stdout == '1'
+
+- name: register tengine is running
+  shell: ps -ef | grep tengine | grep -v grep | wc -l
+  register: tengine_is_running
+
+- name: start tengine
+  shell: /usr/local/tengine/sbin/nginx
+  when: tengine_is_running.stdout == '0' and tengine_conf_is_ok.stdout == '1'
+
+- name: reload tengine
+  shell: /usr/local/tengine/sbin/nginx -s reload
+  when: tengine_is_running.stdout == '1' and tengine_conf_is_ok.stdout == '1'
+
+- name: cp init server script to init.d
+  synchronize:
+    src: "{{ soft_dir }}/{{ zabbix_version }}/misc/init.d/fedora/core/zabbix_server"
+    dest: /etc/init.d/
+    mode: push
+
+- name: cp init agentd script to init.d
+  synchronize:
+    src: "{{ soft_dir }}/{{ zabbix_version }}/misc/init.d/fedora/core/zabbix_agentd"
+    dest: /etc/init.d/
+    mode: push
+
+- name: config zabbix_server conf
+  template:
+    src: zabbix_server.conf.j2
+    dest: "{{ zabbix_server_conf }}"
+    backup: yes
+
+- name: config zabbix_agentd conf
+  template:
+    src: zabbix_agentd.conf.j2
+    dest: "{{ zabbix_agentd_conf }}"
+    backup: yes
+
+- name: config sendmail conf
+  template:
+    src: sendmail.py.j2
+    dest: "{{ zabbix_scripts_dir }}/sendmail.py"
+    backup: yes
+    mode: 1777
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    force: yes
+
+- name: config send dingding conf
+  template:
+    src: zabbix_dingding.py.j2
+    dest: "{{ zabbix_scripts_dir }}/zabbix_dingding.py"
+    backup: yes
+    mode: 1777
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    force: yes
+
+- name: config tcp_conn_status script
+  template:
+    src: tcp_conn_status.sh.j2
+    dest: "{{ zabbix_scripts_dir }}/tcp_conn_status.sh.j2"
+    backup: yes
+    mode: 1777
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    force: yes
+
+- name: config tcp_conn_status agentd conf
+  template:
+    src: tcp-status-params.conf.j2
+    dest: "{{ zabbix_install_dir }}/etc/zabbix_agentd.conf.d/tcp-status-params.conf.j2"
+    backup: yes
+    mode: 1777
+    owner: "{{ user }}"
+    group: "{{ group }}"
+    force: yes
+
+- name: echo result
+  debug: 
+    msg: " configratulations zabbix_server php is installed successfully ! please check the url {{ test_url }}"

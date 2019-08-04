@@ -57,7 +57,7 @@
     group: "{{ group }}" 
     owner: "{{ user }}"
 
-- name: configiure make and make install php
+- name: configure make and make install php
   shell: "chdir={{ soft_dir }}php-{{ php_version }} . /etc/profile && {{ config_params }} && make && make install"
 
 - name: link php bin sbin 

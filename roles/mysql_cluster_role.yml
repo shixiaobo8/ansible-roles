@@ -1,5 +1,5 @@
 ---
-- hosts: mysql_cluster
+- hosts: localhost
   remote_user: root
   roles:
     - role: mysql_cluster

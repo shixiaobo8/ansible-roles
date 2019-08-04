@@ -16,7 +16,7 @@
       - net-snmp-devel
       - libevent
       - libevent-devel
-   when: ansible_os_family == 'RedHat'
+  when: ansible_os_family == 'RedHat'
 
 - name: dowload zabbix soft 
   get_url:
@@ -40,6 +40,16 @@
     copy: no
 
 - name: config and make and make install
-  shell: "{{ config_cmd }}"
+  shell: "chdir={{ soft_dir }}/{{ zabbix_version }}/ . /etc/profile && {{ config_cmd }}"
 
-- name: cp php dir to 
+- name: check web dir
+  file:
+    path: "{{ zabbix_web_dir }}"
+    state: directory
+    owner: www
+    group:  www
+
+- name: cp php foranted to web dir
+  shell: "cp -rp {{ soft_dir }}/{{ zabbix_version }}/frontends/php {{ zabbix_php_dir }} "
+  when: not zabbix_php_dir is exists
+ 

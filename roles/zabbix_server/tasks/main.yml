@@ -1,5 +1,6 @@
 ---
 # tasks file for zabbix_server
 - include_tasks: install.yml
+- include_tasks: config_zabbix_mysql_db.yml
 - include_tasks: config.yml
 - include_tasks: service.yml

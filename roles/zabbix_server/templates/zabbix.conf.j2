@@ -1,0 +1,16 @@
+
+# api.yikaobang.com.cn
+server
+{
+
+           listen {{ zabbix_php_port }};
+           server_name {{ ansible_ssh_host }} {{ zabbix_php_domain }};
+           index index.php index.html index.htm default.html default.htm default.php;
+           root  {{ zabbix_php_dir }};
+	   include fastcgi_conf.conf;           
+     
+           location / {
+           	root  {{ zabbix_php_dir }};
+           }
+}
+

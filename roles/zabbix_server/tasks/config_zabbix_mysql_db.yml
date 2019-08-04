@@ -1,0 +1,47 @@
+---
+
+- name: pip install mysqldb
+  pip: 
+    name: pymysql
+
+- name: add mysql db zabbix
+  mysql_db: 
+    name: "{{ zabbix_server_mysql_db }}"
+    state: present
+    # login_host: "{{ zabbix_server_mysql_host }}"
+    login_user: root
+    login_password: "{{ zabbix_server_mysql_root_pwd }}"
+    login_port: 3306
+  delegate_to: "{{ zabbix_server_mysql_host }}"
+
+- name:  create zabbix server mysql user
+  mysql_user:
+    # login_host: "{{ zabbix_server_mysql_host }}"
+    login_user: root
+    login_password: "{{ zabbix_server_mysql_root_pwd }}"
+    login_port: 3306
+    name: "{{ zabbix_server_mysql_user }}"
+    host: "{{ item }}"
+    password: "{{ zabbix_server_mysql_pwd }}"
+    priv: '{{ zabbix_server_mysql_db }}.*:ALL'
+    state: present
+  with_items:
+    - "{{ ansible_ssh_host }}"
+    - "{{ zabbix_server_ip }}"
+    - "{{ zabbix_server_mysql_host }}"
+  delegate_to: "{{ zabbix_server_mysql_host }}"
+ 
+- name: import zabbix sql to zabbix
+  mysql_db:
+    login_host: "{{ ansible_ssh_host }}"
+    login_user: "{{ zabbix_server_mysql_user }}"
+    login_password: "{{ zabbix_server_mysql_pwd }}"
+    login_port: 3306
+    state: import
+    name: "{{ zabbix_server_mysql_db }}"
+    target: "{{ soft_dir }}/{{ zabbix_version }}/database/mysql/{{ item }}"
+  with_items:
+    - schema.sql
+    - images.sql
+    - data.sql
+  ignore_errors: yes
