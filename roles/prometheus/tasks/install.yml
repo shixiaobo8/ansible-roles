@@ -1,0 +1,27 @@
+---
+
+- name: download prometheus
+  when: not prometheus_store_name is exists
+  delegate_to: localhost
+  get_url:
+    url: "{{ prometheus_download_url }}"
+    validate_certs: no
+    dest: "{{ soft_dir }}"
+
+- name: scp soft
+  synchronize:
+    src: "{{ prometheus_store_name }}"
+    dest: "{{ soft_dir }}"
+    mode: push
+
+- name: unarchive soft
+  unarchive:
+    src: "{{ prometheus_store_name }}"
+    dest: "{{ prometheus_install_dir }}"
+
+- name: link dir prometheus
+  file:
+    state: link
+    src: "{{ prometheus_install_name }}"
+    dest: "{{ prometheus_link_dir }}"
+

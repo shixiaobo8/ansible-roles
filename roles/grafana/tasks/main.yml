@@ -1,0 +1,27 @@
+---
+# tasks file for grafana
+
+- name: yum install epel-release
+  yum:
+    name: epel-release
+    update_cache: yes
+
+- name: download grafana
+  get_url:
+    url: "{{ grafana_download_url }}"
+    validate_certs: no
+    dest: "{{ soft_dir }}"
+  when: not grafana_store_name is exists
+
+- name: yum install grafana
+  yum:
+    name: "{{ grafana_store_name }}"
+    state: present
+
+- name: add to systemd boot
+  systemd:
+    name: grafana-server
+    state: restarted
+    enabled: yes
+    force: yes
+    daemon_reload: yes

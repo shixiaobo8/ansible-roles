@@ -1,0 +1,6 @@
+---
+# defaults file for grafana
+grafana_download_url: https://dl.grafana.com/oss/release/grafana-6.3.2-1.x86_64.rpm
+soft_dir: /root/softs/
+grafana_version: grafana-6.3.2-1
+grafana_store_name: "{{ soft_dir }}/grafana-6.3.2-1.x86_64.rpm"
