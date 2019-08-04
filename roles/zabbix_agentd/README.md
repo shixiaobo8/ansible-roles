@@ -1,38 +1,34 @@
-Role Name
+zabbix agentd role 安装
 =========
+[toc]
 
-A brief description of the role goes here.
 
-Requirements
+注意事项说明
 ------------
+```
+	1. 请注意其中的几个重要变量
+	2. 使用自动注册注册到服务端
+	3. 在zabbix_agentd.conf 中配置了几个重要参数,其中system.uname  中可以加入自动注册的自主变量，
+```
 
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
-
-Role Variables
+role 变量说明:
 --------------
+|变量名称|变量说明|
+|-------|------|
+|1111|zabbix下载地址|
 
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
 
-Dependencies
-------------
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
-
-Example Playbook
+执行示例
 ----------------
+     ansible-playbook zabbix_agentd_roles.yml 
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
-
-    - hosts: servers
+    - hosts: all
+      remote_user: root
       roles:
-         - { role: username.rolename, x: 42 }
+        - role: zabbix_agentd
 
-License
+
+作者
 -------
-
-BSD
-
-Author Information
-------------------
-
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+yiguo.shi 2019.8.7

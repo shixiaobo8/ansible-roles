@@ -391,7 +391,8 @@ LogFile=/tmp/zabbix_agentd.log
 # Default:
 # TLSPSKFile=
 HostMetadataItem=system.uname
-ListenIP=0.0.0.0
+HostMetadata={{ autoregister_item }}
+ListenIP={{ ansible_ssh_host }}
 Server={{ zabbix_server_ip }}
 Hostname={{ ansible_hostname }}
 ServerActive={{ zabbix_server_ip }}
