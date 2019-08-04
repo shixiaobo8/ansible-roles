@@ -1,0 +1,45 @@
+---
+
+- name: create group zabbix
+  group:
+    name: "{{ group }}"
+
+- name: create user zabbix
+  user:
+    name: "{{ group }}"
+    group: "{{ user }}"
+
+- name: yum install need pkgs
+  yum:
+    name:
+      - net-snmp
+      - net-snmp-devel
+      - libevent
+      - libevent-devel
+   when: ansible_os_family == 'RedHat'
+
+- name: dowload zabbix soft 
+  get_url:
+    url: "{{ zabbix_download_url }}"
+    dest: "{{ zabbix_store_name }}"
+    validate_certs: no
+  delegate_to: localhost
+  when: not zabbix_store_name is exists 
+
+- name: scp soft
+  synchronize:
+    src: "{{ zabbix_store_name }}"
+    dest: "{{ soft_dir }}"
+    mode: push
+
+- name: unarchive soft
+  unarchive:
+    src: "{{ zabbix_store_name }}"
+    dest: "{{ soft_dir }}/{{ zabbix_version }}"
+    creates: "{{ soft_dir }}/{{ zabbix_version }}"
+    copy: no
+
+- name: config and make and make install
+  shell: "{{ config_cmd }}"
+
+- name: cp php dir to 

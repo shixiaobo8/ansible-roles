@@ -1,0 +1,20 @@
+---
+# defaults file for php7
+soft_dir: /root/softs/
+php_version: 7.2.21
+php_download_url: https://www.php.net/distributions/php-7.2.21.tar.gz
+php_store_name: "{{ soft_dir }}php-7.2.21.tar.gz"
+php_install_dir: /usr/local/
+php_link_dir: /usr/local/php/
+php_slow_log_dir: /www/logs/nginx/
+php_slow_log: "{{ php_slow_log_dir }}/slow.log"
+php_bin_dir: "{{ php_link_dir }}/bin/"
+php_sbin_dir: "{{ php_link_dir }}/sbin/"
+php_etc_dir: "{{ php_link_dir }}/etc/"
+php_ini: "{{ php_etc_dir }}/php.ini"
+php_start_script: "/etc/init.d/php-fpm"
+php_fpm_conf: "{{ php_etc_dir }}/php-fpm.conf"
+php_fpm_conf_dir: "{{ php_etc_dir }}/php-fpm.d"
+user: www
+group: www
+config_params: "./configure --prefix={{ php_link_dir }} --with-config-file-path={{ php_etc_dir }} --enable-fpm --with-fpm-user={{ user }} --with-fpm-group={{ group }} --with-mysql=mysqlnd --with-mysqli=mysqlnd --with-pdo-mysql=mysqlnd --with-iconv-dir --with-freetype-dir=/usr/local/freetype --with-jpeg-dir --with-png-dir --with-zlib --with-libxml-dir=/usr --enable-xml --disable-rpath --enable-bcmath --enable-shmop --enable-sysvsem --enable-inline-optimization --with-curl --enable-mbregex --enable-mbstring --with-mcrypt --enable-ftp --with-gd --enable-gd-native-ttf --with-openssl --with-mhash --enable-pcntl --enable-sockets --with-xmlrpc --enable-zip --enable-soap --with-gettext --disable-fileinfo --enable-opcache --with-curl=/usr/local/curl"

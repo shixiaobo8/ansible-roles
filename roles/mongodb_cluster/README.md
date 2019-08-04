@@ -1,4 +1,4 @@
-# mongodb 使用ansible手册
+# mongodb ansible role 安装方式使用手册
 [toc]
 
 
@@ -8,6 +8,9 @@
 
 1. 服务端 ansible 版本号: 2.8
 2. 配置/etc/ansible/hosts 文件的mongodb分组
+3. 改配置只部署mongod shard1 shard2 shard3 mongos mongo_conf 并设置相应的集群
+4. 执行完成后mongos 没有设置用户名,请执行按需设置
+5. 改部署使用supervisor 管理所有mongo进程,如不想用请删除/etc/supervisor.d/ mongodb 相应的ini文件 然后重载reload 并update supervisor即可
 
 Role 变量说明
 --------------
@@ -37,6 +40,9 @@ python-pip_role
         - role: python-pip
         - role: mongodb_cluster
 
+其他问题
+------
+遇到的其他问题请在这里补充
 
 版权
 -------

@@ -1,0 +1,99 @@
+user  www www;
+
+worker_processes auto;
+
+error_log  /www/logs/nginx/nginx_error.log  error; 
+
+pid        {{ tengine_install_dir }}/logs/nginx.pid;
+
+worker_rlimit_nofile 65535;
+
+events
+    {
+        use epoll;
+        worker_connections 65535;
+        multi_accept on;
+    }
+
+http
+    {
+        include       mime.types;
+        default_type  application/octet-stream;
+        server_names_hash_bucket_size 128;
+        client_header_buffer_size 128k;
+        large_client_header_buffers 4 128k;
+        client_max_body_size 50m;
+
+        sendfile   on;
+        tcp_nopush on;
+
+        keepalive_timeout 40;
+        #keepalive_timeout 0;
+
+        tcp_nodelay on;
+
+        fastcgi_connect_timeout 120;
+        fastcgi_send_timeout 120;
+        fastcgi_read_timeout 120;
+        fastcgi_buffer_size 128k;
+        fastcgi_buffers 4 128k;
+        fastcgi_busy_buffers_size 128k;
+        fastcgi_temp_file_write_size 256k;
+
+        gzip on;
+        gzip_min_length  1k;
+        gzip_buffers     4 16k;
+        gzip_http_version 1.1;
+        gzip_comp_level 2;
+        gzip_types     text/plain application/javascript application/x-javascript text/javascript text/css application/xml application/xml+rss;
+        gzip_vary on;
+        gzip_proxied   expired no-cache no-store private auth;
+        gzip_disable   "MSIE [1-6]\.";
+
+        #limit_conn_zone $binary_remote_addr zone=perip:10m;
+        ##If enable limit_conn_zone,add "limit_conn perip 10;" to server section.
+
+        server_tokens off;
+
+        #log format
+        #log_format  access  '$remote_addr - $remote_user [$time_local] "$request" '
+        #     '$status $body_bytes_sent "$http_referer" '
+        #     '"$http_user_agent" $http_x_forwarded_for';
+	#     access_log off;
+		 log_format  access  '$upstream_addr - $upstream_status   $remote_addr - $remote_user [$time_local] "$request" '
+        '$status $body_bytes_sent "$http_referer" '
+        '"$http_user_agent" $http_x_forwarded_for '
+        '"$upstream_response_time" "$request_time"';
+
+	server{
+		server_name localhost;
+		root  html;
+		location /yjy_ng_status {
+			stub_status on;
+			access_log off;
+			#allow	127.0.0.1;
+			#deny	all;
+		}
+	}
+	# 监控页面以及测试代码处
+	server {
+                listen  888;
+                server_name     localhost;
+                index   index.php index.html;
+                root    html;
+				
+		location ~ /ykb_php_status$ {
+			fastcgi_param SCRIPT_FILENAME $fastcgi_script_name;
+            		include fastcgi_params;
+            		fastcgi_pass unix:/tmp/php-cgi.sock;
+                        access_log off;
+                }
+	
+		location ~ \.php$ {
+                        include fastcgi_conf.conf;
+		}
+        }
+
+	include vhost/*.conf;
+}
+

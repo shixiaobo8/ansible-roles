@@ -1,0 +1,19 @@
+       location ~ [^/]\.php(/|$)
+        {
+                fastcgi_pass  unix:/tmp/php-cgi.sock;
+               # fastcgi_pass  127.0.0.1:9000;
+                fastcgi_index index.php;
+                fastcgi_read_timeout 300;
+                include fastcgi.conf;
+                include pathinfo.conf;
+        }
+
+        location ~ .*\.(gif|jpg|jpeg|png|bmp|swf)$
+        {
+                expires      30d;
+        }
+
+        location ~ .*\.(js|css)?$
+        {
+                expires      12h;
+        }

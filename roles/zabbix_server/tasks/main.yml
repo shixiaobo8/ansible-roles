@@ -1,0 +1,5 @@
+---
+# tasks file for zabbix_server
+- include_tasks: install.yml
+- include_tasks: config.yml
+- include_tasks: service.yml

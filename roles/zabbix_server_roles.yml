@@ -1,0 +1,8 @@
+---
+
+- hosts: localhost
+  remote_user: root
+  roles:
+    - role: tengine_source
+    - role: php7
+    - role: zabbix_server

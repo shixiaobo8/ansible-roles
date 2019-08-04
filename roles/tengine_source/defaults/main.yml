@@ -1,0 +1,13 @@
+---
+# defaults file for nginx_source
+tengine_version: tengine-2.3.0
+tengine_download_url: http://tengine.taobao.org/download/tengine-2.3.0.tar.gz
+soft_dir: /root/softs/
+tengine_store_name: "{{ soft_dir }}{{ tengine_version }}.tar.gz"
+soft_src_dir: "{{ soft_dir }}/{{ tengine_version  }}"
+tengine_install_dir: /usr/local/tengine/
+tengine_conf_dir: "{{ tengine_install_dir }}/conf/"
+tengine_main_conf: "{{ tengine_conf_dir }}/nginx.conf"
+tengine_vhost_conf_dir: "{{ tengine_conf_dir }}/vhost/"
+tengine_vhost_php_test_conf: "{{ tengine_vhost_conf_dir }}/test.conf"
+test_url: "http://{{ ansible_ssh_host }}:8000/"

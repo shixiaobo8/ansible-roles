@@ -1,0 +1,33 @@
+---
+
+- name: test tengine conf
+  shell: "{{ tengine_install_dir }}/sbin/nginx -t 2>&1 | grep ok | grep -v grep| wc -l"
+  register: register_conf
+
+- debug:
+    msg: "{{ register_conf }}"
+
+- name: register running nginx
+  shell: ps -ef | grep nginx | grep -v grep | wc -l
+  register: nginx_nums
+
+- debug:
+    msg: "{{ nginx_nums.stdout }}"
+
+- name: start tengine
+  shell: "{{ tengine_install_dir }}/sbin/nginx"
+  when: nginx_nums.stdout == '0' and register_conf.stdout == '1'
+
+- name: reload tengine
+  shell: "{{ tengine_install_dir }}/sbin/nginx -s reload"
+  when: register_conf.stdout == '1'
+
+- name: echo result
+  shell: echo 'tengine is installed successfully'
+  register: result
+
+- debug:
+    msg: "{{ result.stdout }}, please test the url {{ test_url }}"
+
+
+

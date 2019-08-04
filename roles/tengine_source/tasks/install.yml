@@ -1,0 +1,25 @@
+---
+
+- name: download tengine 
+  get_url:
+    url: "{{ tengine_download_url }}"
+    dest: "{{ soft_dir }}"
+    validate_certs: no
+  delegate_to: localhost
+  when: not tengine_store_name is exists
+
+- name: scp soft
+  synchronize:
+    src: "{{ tengine_store_name }}"
+    dest: "{{ soft_dir }}"
+    mode: push
+
+- name: unarchive soft tengine
+  unarchive:
+    src: "{{ tengine_store_name }}"
+    dest: "{{ soft_dir }}"
+    copy: yes
+    creates: "{{ soft_src_dir }}"
+
+- name: config and make and make install
+  shell: "chdir={{ soft_src_dir }} ./configure --prefix=/usr/local/tengine && make && make install"

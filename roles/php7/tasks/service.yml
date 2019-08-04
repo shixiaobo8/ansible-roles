@@ -1,0 +1,11 @@
+--- 
+
+- name: start php-fpm
+  shell: /etc/init.d/php-fpm restart
+
+- name: echo php install result
+  shell: echo 'configratulations php7 is installed successfully !'
+  register: result
+
+- debug:
+    msg: "{{ result.stdout }}"

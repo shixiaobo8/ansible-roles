@@ -1,0 +1,17 @@
+---
+
+- name: config php.ini
+  template:
+    src: php.ini.j2
+    dest: "{{ php_ini }}"
+
+- name: config php fpm conf
+  template:
+    src: php-fpm.conf.j2
+    dest: "{{ php_fpm_conf }}"
+
+- name: config php-fpm start scripts
+  template:
+    src: php-fpm.j2
+    dest: "{{ php_start_script }}"
+    mode: 1777

@@ -1,0 +1,38 @@
+---
+
+- name: config main conf nginx.conf
+  template:
+    src: nginx.conf.j2
+    dest: "{{ tengine_main_conf }}"
+
+- name: config pathinfo.conf
+  template:
+    src: pathinfo.conf.j2
+    dest: "{{ tengine_conf_dir }}/pathinfo.conf"
+
+- name: config fastcgi.conf
+  template:
+    src: fastcgi.conf.j2
+    dest: "{{ tengine_conf_dir }}/fastcgi.conf"
+
+- name: config fastcgi_conf.conf
+  template:
+    src: fastcgi_conf.conf.j2
+    dest: "{{ tengine_conf_dir }}/fastcgi_conf.conf"
+
+- name: create vhost dir
+  file:
+    path: "{{ tengine_conf_dir }}/vhost"
+    state: directory
+
+- name: config test php vhost conf
+  template:
+    src: test.php.conf.j2
+    dest: "{{ tengine_conf_dir }}/vhost/test.php.conf"
+
+- name: config test index.php
+  template:
+    src: test_index.php.j2
+    dest: "{{ tengine_install_dir }}/html/index.php"
+
+

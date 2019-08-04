@@ -1,0 +1,71 @@
+---
+
+- name: create php group
+  user:
+    name: "{{ group }}"
+
+- name: create php user 
+  user:
+    name: "{{ user }}"
+    group: "{{ group }}"
+
+- name: yum remove php yum pkgs
+  yum:
+    name:
+      php
+    state: absent
+
+- name: yum  install php needed pkgs for redhat
+  yum:
+    name:
+      - epel-release
+      - freetype-devel
+      - openssl-devel
+      - libxml2-devel
+      - libjpeg-devel
+      - libpng-devel
+      - curl-devel
+    update_cache: yes
+    state: latest
+  when: ansible_os_family == 'RedHat'
+
+- name: download php7
+  get_url:
+    url: "{{ php_download_url }}"
+    validate_certs: no
+    dest: "{{ soft_dir }}"
+  delegate_to: localhost
+  when: not php_store_name is exists
+
+- name: scp soft
+  synchronize:
+    src: "{{ php_store_name }}"
+    dest: "{{ soft_dir }}"
+    mode: push
+
+- name: unarchive php soft
+  unarchive:
+    src: "{{ php_store_name }}"
+    dest: "{{ soft_dir }}"
+    #creates: "{{ soft_dir }}php-{{ php_version }}"
+    copy: no
+
+- name: create php log dir
+  file:
+    path: "{{ php_slow_log_dir }}"
+    state: directory
+    group: "{{ group }}" 
+    owner: "{{ user }}"
+
+- name: configiure make and make install php
+  shell: "chdir={{ soft_dir }}php-{{ php_version }} . /etc/profile && {{ config_params }} && make && make install"
+
+- name: link php bin sbin 
+  shell: "ln -sf {{ php_sbin_dir }}/* /usr/sbin/ && ln -sf {{ php_bin_dir }}/* /usr/bin/"
+
+- name: test php cli command
+  shell: php -v
+  register: php_cli_test
+
+- debug:
+    msg: "{{ php_cli_test }}"

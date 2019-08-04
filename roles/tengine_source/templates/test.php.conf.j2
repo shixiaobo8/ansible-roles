@@ -1,0 +1,16 @@
+
+# api.yikaobang.com.cn
+server
+{
+
+           listen 8000 backlog=1024;
+           server_name {{ ansible_ssh_host }};
+           index index.php index.html index.htm default.html default.htm default.php;
+           root  {{ tengine_install_dir }}/html;
+	   include fastcgi_conf.conf;           
+     
+           location / {
+           	root  {{ tengine_install_dir }}/html;
+           }
+}
+
