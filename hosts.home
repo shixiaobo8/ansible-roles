@@ -1,0 +1,73 @@
+# This is the default ansible 'hosts' file.
+#
+# It should live in /etc/ansible/hosts
+#
+#   - Comments begin with the '#' character
+#   - Blank lines are ignored
+#   - Groups of hosts are delimited by [header] elements
+#   - You can enter hostnames or ip addresses
+#   - A hostname/ip can be a member of multiple groups
+
+# Ex 1: Ungrouped hosts, specify before any group headers.
+
+## green.example.com
+## blue.example.com
+## 192.168.100.1
+## 192.168.100.10
+
+# Ex 2: A collection of hosts belonging to the 'webservers' group
+
+## [webservers]
+## alpha.example.org
+## beta.example.org
+## 192.168.1.100
+## 192.168.1.110
+[codis]
+centos7 etcd1=192.168.2.133 etcd2=192.168.2.107 etcd3=192.168.2.102 ansible_ssh_host=192.168.2.133 ip_var=5 etcd_name=etcd1 zookeeper_server_id=1 zk_node1=192.168.2.133 zk_node2=192.168.2.107 zk_node3=192.168.2.102 codis_node1_6379_master='192.168.2.102 6380' codis_node1_6380_master='192.168.2.107 6379' codis_node_name=codis_node1 jodis_addr="192.168.2.133:2181,192.168.2.107:2181,192.168.2.102:2181" codis_dashboard=1
+centos6 etcd1=192.168.2.133 etcd2=192.168.2.107 etcd3=192.168.2.102 ansible_python_interpreter=/usr/local/bin/python3 teransible_ssh_host=192.168.2.107 ip_var=6 etcd_name=etcd2 zookeeper_server_id=2 zk_node1=192.168.2.133 zk_node2=192.168.2.107 zk_node3=192.168.2.102 codis_node1_6379_master='192.168.2.133 6380' codis_node1_6380_master='192.168.2.102 6379' codis_node_name=codis_node1 jodis_addr="192.168.2.133:2181,192.168.2.107:2181,192.168.2.102:2181" codis_dashboard=0
+ubuntu16-04 etcd1=192.168.2.133 etcd2=192.168.2.107 etcd3=192.168.2.102 ansible_ssh_host=192.168.2.102 ip_var=7 etcd_name=etcd3 zookeeper_server_id=3 zk_node1=192.168.2.133 zk_node2=192.168.2.107 zk_node3=192.168.2.102 codis_node1_6379_master='192.168.2.107 6380' codis_node1_6380_master='192.168.2.133 6379' codis_node_name=codis_node1 jodis_addr="192.168.2.133:2181,192.168.2.107:2181,192.168.2.102:2181" codis_dashboard=0
+
+
+[codis-cluster]
+centos7 ansible_ssh_host=192.168.2.133 ip_var=5 etcd_name=etcd1 zookeeper_server_id=1 zk_node1=192.168.2.133 zk_node2=192.168.2.107 zk_node3=192.168.2.102 codis_node1_6379_master='192.168.2.102 6380' codis_node1_6380_master='192.168.2.107 6379' codis_node_name=codis_node1 jodis_addr="192.168.2.133:2181,192.168.2.107:2181,192.168.2.102:2181" codis_dashboard=1
+centos6 ansible_ssh_host=192.168.2.107 ip_var=6 etcd_name=etcd2 zookeeper_server_id=2 zk_node1=192.168.2.133 zk_node2=192.168.2.107 zk_node3=192.168.2.102 codis_node1_6379_master='192.168.2.133 6380' codis_node1_6380_master='192.168.2.102 6379' codis_node_name=codis_node1 jodis_addr="192.168.2.133:2181,192.168.2.107:2181,192.168.2.102:2181" codis_dashboard=0
+ubuntu16-04 ansible_ssh_host=192.168.2.102 ip_var=7 etcd_name=etcd3 zookeeper_server_id=3 zk_node1=192.168.2.133 zk_node2=192.168.2.107 zk_node3=192.168.2.102 codis_node1_6379_master='192.168.2.107 6380' codis_node1_6380_master='192.168.2.133 6379' codis_node_name=codis_node1 jodis_addr="192.168.2.133:2181,192.168.2.107:2181,192.168.2.102:2181" codis_dashboard=0
+
+[codis:vars]
+codis_var=this is codis cluter server vars
+
+[mysql_cluster]
+centos7
+ubuntu16-04
+
+[redhat]
+#redhat5
+
+[ubuntu]
+ubuntu16-04 ansible_ssh_host=192.168.2.102
+
+#[windows]
+#dev_windows ansible_ssh_host=10.0.0.2 ansible_remote_user='yunwei' ansible_ssh_pass='Xj@yunwei123' ansible_ssh_port=22
+
+#[macos]
+#mac_os ansible_ssh_host=10.0.0.4 ansible_remote_user='shiyiguo' ansible_ssh_pass='Zt123'
+#mac_os ansible_ssh_host=10.0.0.4 ansible_remote_user='shiyiguo'
+# If you have multiple hosts following a pattern you can specify
+# them like this:
+
+## www[001:006].example.com
+
+# Ex 3: A collection of database servers in the 'dbservers' group
+
+## [dbservers]
+## 
+## db01.intranet.mydomain.net
+## db02.intranet.mydomain.net
+## 10.25.1.56
+## 10.25.1.57
+
+# Here's another example of host ranges, this time there are no
+# leading 0s:
+
+## db-[99:101]-node.example.com
+

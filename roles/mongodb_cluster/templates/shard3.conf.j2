@@ -1,0 +1,52 @@
+# mongod.conf
+
+# for documentation of all options, see:
+#   http://docs.mongodb.org/manual/reference/configuration-options/
+
+# where to write logging data.
+systemLog:
+  destination: file
+  logAppend: true
+  path: /data/mongo/shard3/log/mongod.log
+  logRotate: rename
+# Where and how to store data.
+storage:
+  dbPath: /data/mongo/shard3/data
+  journal:
+    enabled: true
+  engine: wiredTiger
+#  mmapv1:
+  wiredTiger:
+     engineConfig:
+        cacheSizeGB: 2
+
+# how the process runs
+processManagement:
+  fork: true  # fork and run in background
+  pidFilePath: /data/mongo/shard3/mongod.pid  # location of pidfile
+
+# network interfaces
+net:
+  port: 21003
+  bindIp: 0.0.0.0  # Listen to local interface only, comment to listen on all interfaces.
+
+
+#security:
+security:
+  authorization: enabled
+  keyFile: /data/mongo/conf/mongo.key
+#operationProfiling:
+
+#replication:
+replication:
+  replSetName: shard3
+sharding:
+  clusterRole: "shardsvr"
+## Enterprise-Only Options
+
+#auditLog:
+
+#snmp:
+#operationProfiling:
+#   slowOpThresholdMs: 200
+#   mode: slowOp

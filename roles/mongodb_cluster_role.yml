@@ -1,6 +1,6 @@
 ---
 
-- hosts: mongodb_cluster
+- hosts: codis
   remote_user: root
   roles:
     - role: mongodb_cluster

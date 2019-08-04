@@ -3,3 +3,52 @@
 mongodb_version: 4.0.11
 mongodb_download_url: https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-4.0.11.tgz
 soft_dir: /root/softs/
+soft_store_name: "{{ soft_dir }}mongodb-linux-x86_64-4.0.11.tgz"
+install_dir: /usr/local/
+install_link_dir: /usr/local/mongo
+install_dir_name: /usr/local/mongodb-linux-x86_64-4.0.11
+mongo_config_dir: /data/mongo/conf
+mongo_config_data_dir: /data/mongo/config/data
+mongo_config_log_dir: "{{ mongo_config_dir }}/log/mongod.log"
+mongo_config_log: "{{ mongo_config_log_dir }}/mongod.log"
+mongo_config_pid: /data/mongo/config/mongod.pid
+mongo_config_conf: /data/mongo/conf/config.conf
+mongo_config_start_cmd: "/usr/local/mongo/bin/mongod -f {{ mongo_config_conf }}"
+mongo_config_port: 21004
+user: mongo
+group: mongo
+mongo_data_dir: /data/mongo
+shard1_data_dir: "{{ mongo_data_dir }}/shard1/data/"
+shard2_data_dir: "{{ mongo_data_dir }}/shard2/data/"
+shard3_data_dir: "{{ mongo_data_dir }}/shard3/data/"
+shard1_log_dir: "{{ mongo_data_dir }}/shard1/log/"
+shard2_log_dir: "{{ mongo_data_dir }}/shard2/log/"
+shard3_log_dir: "{{ mongo_data_dir }}/shard3/log/"
+shard1_log: "{{ shard1_log_dir }}mongod.log" 
+shard1_pid: /data/mongo/shard1/mongod.pid
+shard1_port: 21001
+shard1_config: "{{ mongo_config_dir }}/shard1.conf"
+shard1_start_cmd: "/usr/local/mongo/bin/mongod -f {{ shared1_config }}"
+shard2_log: "{{ shard2_log_dir }}mongod.log" 
+shard2_pid: /data/mongo/shard2/mongod.pid
+shard2_port: 21002
+shard2_config: "{{ mongo_config_dir }}/shard2.conf"
+shard2_start_cmd: "/usr/local/mongo/bin/mongod -f {{ shared2_config }}"
+shard3_log: "{{ shard3_log_dir }}mongod.log" 
+shard3_pid: /data/mongo/shard3/mongod.pid
+shard3_port: 21003
+shard3_config: "{{ mongo_config_dir }}/shard3.conf"
+shard3_start_cmd: "/usr/local/mongo/bin/mongod -f {{ shared3_config }}"
+mongod_data_dir: /data/mongo/config/data
+mongod_log_dir: /data/mongo/config/log
+mongod_log: "{{ mongod_log_dir }}/mongod.log"
+mongod_pid: "/data/mongo/config/mongod.log"
+mongod_port: 21004
+mongos_log_dir: /data/mongo/mongos/log
+mongos_config: /data/mongo/conf/mongos.conf
+mongos_log: /usr/local/mongo/mongos/mongos.log
+mongos_pid: /usr/local/mongo/mongos/mongos.pid
+mongos_port: 21000
+mongod_log: "{{ mongo_config_dir }}/config/log"
+mongo_auth_key: /data/mongo/conf/mongo.key
+mongo_auth_key_cmd: openssl rand -base64 756 > /etc/mongodb/conf/mongo.key

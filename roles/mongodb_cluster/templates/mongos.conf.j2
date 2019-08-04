@@ -1,0 +1,23 @@
+systemLog:
+  destination: file
+  logAppend: true
+  path: /data/mongo/mongos/log/mongos.log
+processManagement:
+  fork: true
+  pidFilePath: /data/mongo/mongos/mongos.pid
+
+# network interfaces
+net:
+  port: 21000
+  bindIp: 0.0.0.0
+  #监听的配置服务器,只能有1个或者3个 configs为配置服务器的副本集名字
+sharding:
+  configDB: config/172.18.21.58:21004,172.18.21.59:21004,172.18.21.60:21004
+#security:
+#    keyFile: "/data/mongo/conf/mongo.key"
+
+
+operationProfiling:
+   slowOpThresholdMs: 200
+   mode: slowOp
+   rateLimit: 100
