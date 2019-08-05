@@ -9,6 +9,13 @@
     name: www
     group: www
 
+- name: mkdir nginx log dir
+  file:
+    path: /www/logs/nginx
+    state: directory
+    owner: www
+    group: www 
+
 - name: install epel repo 
   yum: 
     name: epel-release
