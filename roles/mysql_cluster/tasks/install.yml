@@ -1,5 +1,15 @@
 ---
 
+- name: yum epel
+  yum:
+    name: epel-release
+    state: latest
+
+- name: yum install need pkgs
+  yum:
+    name: ['mysql-devel']
+    state: latest
+
 - name: create mysql group
   group: "name={{ user }} state=present"
 
