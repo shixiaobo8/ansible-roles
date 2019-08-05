@@ -44,7 +44,7 @@
 
 - name: create scripts dir
   file:
-    path: /usr/local/zabbix/share/zabbix/alertscirpts
+    path: /usr/local/zabbix/share/zabbix/alertscripts
     mode: 1777
     owner: zabbix
     group: zabbix
