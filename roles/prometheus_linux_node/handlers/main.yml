@@ -1,0 +1,16 @@
+---
+# handlers file for prometheus_linux_node
+
+- name: reread_and_update_supervisor_redhat
+  supervisorctl:
+    state: present
+    name: prometheus_linux_node
+    config: "{{ supervisor_redhat_dir }}/prometheus_linux_node.ini"
+  when: ansible_ssh_host == 'RedHat'
+
+- name: reread_and_update_supervisor_debian
+  supervisorctl:
+    state: present
+    name: prometheus_linux_node
+    config: "{{ supervisor_redhat_dir }}/prometheus_linux_node.ini"
+  when: ansible_ssh_host == 'Debian'

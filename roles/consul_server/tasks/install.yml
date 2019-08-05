@@ -1,0 +1,42 @@
+---
+
+- name: download consul
+  when: not consul_store_name is exists
+  delegate_to: localhost
+  get_url:
+    url: "{{ consul_download_url }}"
+    validate_certs: no
+    dest: "{{ soft_dir }}"
+
+- name: scp soft
+  synchronize:
+    src: "{{ consul_store_name }}"
+    dest: "{{ soft_dir }}"
+    mode: push
+
+- name: unarchive soft
+  unarchive:
+    src: "{{ consul_store_name }}"
+    dest: "{{ consul_install_dir }}"
+
+- name: link dir consul
+  file:
+    state: link
+    path: "{{ consul_install_dir }}"
+    src: "{{ consul_install_dir }}"
+    dest: "{{ consul_link_dir }}/consul"
+    force: yes
+    follow: yes
+
+- name: create consul need dir
+  file:
+    state: directory
+    path: "{{ item }}"
+    force: yes
+    follow: yes
+  with_items:
+      - "{{ consul_data_dir }}"
+      - "{{ consul_log_dir }}"
+      - "{{ consul_ui_dir }}"
+      - "{{ consul_conf_dir }}"
+      - "{{ supervisor_log_dir }}"

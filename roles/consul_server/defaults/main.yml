@@ -1,0 +1,20 @@
+---
+# defaults file for consul
+soft_dir: /root/softs/
+consul_version: consul_1.5.3_linux_amd64
+consul_download_url: "https://releases.hashicorp.com/consul/1.5.3/{{ consul_version }}.zip"
+consul_store_name: "{{ soft_dir }}/{{ consul_version }}.zip" 
+consul_install_dir: /usr/local/bin/
+consul_install_name: /usr/bin/consul
+consul_link_dir: /usr/bin/
+consul_conf_dir: /etc/consul.d
+consul_data_dir: /opt/consul/data
+consul_log_dir: /opt/consul/logs
+consul_ui_dir: /opt/consul/ui
+consul_server_ip: 10.0.0.9
+consul_node_name: "{{ ansible_hostname }}"
+consul_server_start_cmd: "consul agent -server -bootstrap-expect 3 -data-dir {{ consul_data_dir }} -node={{ consul_node_name }} -bind={{ ansible_ssh_host }} -ui-dir {{ consul_ui_dir }} -rejoin -config-dir={{ consul_conf_dir }} -client 0.0.0.0"
+consul_agentd_start_cmd: "consul agent --data-dir {{ consul_data_dir }} -node={{ consul_node_name }} -bind={{ ansible_ssh_host }}  -join {{ consul_server_ip }}  -config-dir={{ consul_conf_dir }} "
+supervisor_redhat_dir: /etc/supervisord.d/
+supervisor_debian_dir: /etc/supervisor/conf.d/
+supervisor_log_dir: /var/log/supervisor/logs/

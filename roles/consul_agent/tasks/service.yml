@@ -1,0 +1,6 @@
+---
+
+- name: restart supevisor program consul_agent
+  supervisorctl:
+    name: consul_agent
+    state: restarted

@@ -1,0 +1,40 @@
+---
+
+- name: download prometheus_linux_node
+  when: not prometheus_linux_node_store_name is exists
+  delegate_to: localhost
+  get_url:
+    url: "{{ prometheus_linux_node_download_url }}"
+    validate_certs: no
+    dest: "{{ soft_dir }}"
+
+- name: scp soft
+  synchronize:
+    src: "{{ prometheus_linux_node_store_name }}"
+    dest: "{{ soft_dir }}"
+    mode: push
+
+- name: unarchive soft
+  unarchive:
+    src: "{{ prometheus_linux_node_store_name }}"
+    dest: "{{ prometheus_linux_node_install_dir }}"
+
+- name: link dir prometheus_linux_node
+  file:
+    state: link
+    path: "{{ prometheus_linux_node_install_name }}"
+    src: "{{ prometheus_linux_node_install_name }}"
+    dest: "{{ prometheus_linux_node_link_dir }}"
+    force: yes
+    follow: yes
+
+- name: create prometheus_linux_node need dir
+  file:
+    state: directory
+    path: "{{ item }}"
+    force: yes
+    follow: yes
+  with_items:
+      - "{{ prometheus_linux_node_log_dir }}"
+      - "{{ supervisor_log_dir }}"
+

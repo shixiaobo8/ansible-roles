@@ -1,0 +1,16 @@
+---
+# handlers file for consul_server
+
+- name: reread_and_update_supervisor_redhat
+  supervisorctl:
+    state: present
+    name: consul_server
+    config: "{{ supervisor_redhat_dir }}/consul_server.ini"
+  when: ansible_ssh_host == 'RedHat'
+
+- name: reread_and_update_supervisor_debian
+  supervisorctl:
+    state: present
+    name: consul_server
+    config: "{{ supervisor_redhat_dir }}/consul_server.ini"
+  when: ansible_ssh_host == 'Debian'

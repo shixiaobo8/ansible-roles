@@ -1,0 +1,17 @@
+---
+
+- name: add consul_server to supervisor for redhat
+  template:
+    src: consul_server.ini.j2
+    dest: "{{ supervisor_redhat_dir }}/consul_server.ini"
+  notify:
+    reread_and_update_supervisor_redhat
+  when: ansible_os_family == 'RedHat'
+
+- name: add consul_server to supervisor for debian
+  template:
+    src: consul_server.ini.j2
+    dest: "{{ supervisor_debian_dir }}/consul_server.ini"
+  notify:
+    reread_and_update_supervisor_debian
+  when: ansible_os_family == 'Debian'

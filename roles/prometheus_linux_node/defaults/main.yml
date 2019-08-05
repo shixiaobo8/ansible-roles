@@ -1,0 +1,15 @@
+---
+# defaults file for prometheus_linux_node
+soft_dir: /root/softs/
+prometheus_linux_node_version: node_exporter-0.18.1.linux-amd64
+prometheus_linux_node_download_url: "https://github.com/prometheus/node_exporter/releases/download/v0.18.1/{{ prometheus_linux_node_version }}.tar.gz"
+prometheus_linux_node_store_name: "{{ soft_dir }}/{{ prometheus_linux_node_version }}.tar.gz" 
+prometheus_linux_node_install_dir: /opt/
+prometheus_linux_node_install_name: "{{ prometheus_linux_node_install_dir }}{{ prometheus_linux_node_version }}"
+prometheus_linux_node_link_dir: /opt/prometheus_linux_node
+prometheus_linux_node_log_dir: "{{ prometheus_linux_node_link_dir }}/logs/"
+prometheus_linux_node_main_conf: "{{ prometheus_linux_node_link_dir }}/prometheus_linux_node.yml"
+prometheus_linux_node_bin: "{{ prometheus_linux_node_link_dir }}/node_exporter"
+supervisor_redhat_dir: /etc/supervisord.d/
+supervisor_debian_dir: /etc/supervisor/conf.d/
+supervisor_log_dir: /var/log/supervisor/logs/

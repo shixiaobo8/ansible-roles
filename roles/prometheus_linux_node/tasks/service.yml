@@ -1,0 +1,6 @@
+---
+
+- name: restart supevisor program prometheus_linux_node
+  supervisorctl:
+    name: prometheus_linux_node
+    state: restarted

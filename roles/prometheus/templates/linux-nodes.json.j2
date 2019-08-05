@@ -1,6 +1,6 @@
 [
   {
-    "targets": [ "{{ local_node_domain }}:{{ local_node_port }}" ],
+    "targets": [ "{{ ansible_ssh_host }}:{{ local_node_port }}" ],
     "labels": {
       "env": "product",
       "job": "linux-nodes",

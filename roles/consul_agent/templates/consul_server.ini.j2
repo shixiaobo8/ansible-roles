@@ -1,0 +1,13 @@
+[program:consul_server]
+command={{ consul_server_start_cmd }}
+directory=/usr/bin/consul
+process_name=consul_server
+numprocs=1
+priority=990
+stopasgroup=true
+autostart=true
+autorestart=true
+stdout_logfile_maxbytes=40MB
+redirect_stderr=true
+stopsignal=QUIT
+stdout_logfile = /var/log/supervisor/consul-server.log

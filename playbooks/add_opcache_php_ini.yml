@@ -1,0 +1,21 @@
+---
+
+- hosts: localhost
+  remote_user: root
+  tasks: 
+    - name: add opcache params to php.ini
+      blockinfile:
+        path: /usr/local/php/etc/php.ini
+        backup: yes
+        create: yes
+        #validate: /etc/init.d/php-fpm reload
+        block: | 
+          opcache.memory_consumption=128
+          opcache.interned_strings_buffer=8
+          opcache.max_accelerated_files=4000
+          opcache.revalidate_freq=60
+          opcache.fast_shutdown=1
+          opcache.enable_cli=1
+          opcache.enable=1
+       
+

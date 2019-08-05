@@ -1,0 +1,17 @@
+---
+
+- name: add prometheus_linux_node to supervisor for redhat
+  template:
+    src: prometheus_linux_node.ini.j2
+    dest: "{{ supervisor_redhat_dir }}/prometheus_linux_node.ini"
+  notify:
+    reread_and_update_supervisor_redhat
+  when: ansible_os_family == 'RedHat'
+
+- name: add prometheus_linux_node to supervisor for debian
+  template:
+    src: prometheus_linux_node.ini.j2
+    dest: "{{ supervisor_debian_dir }}/prometheus_linux_node.ini"
+  notify:
+    reread_and_update_supervisor_debian
+  when: ansible_os_family == 'Debian'

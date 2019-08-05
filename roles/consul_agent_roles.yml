@@ -1,0 +1,6 @@
+---
+
+- hosts: all:!mongo*
+  remote_user: root
+  roles:
+    - role: consul_agent
