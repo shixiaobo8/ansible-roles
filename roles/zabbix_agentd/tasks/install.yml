@@ -41,3 +41,13 @@
 
 - name: config and make and make install
   shell: "chdir={{ soft_dir }}/{{ zabbix_version }}/ . /etc/profile && {{ config_cmd }}"
+
+- name: create scripts dir
+  file:
+    path: /usr/local/zabbix/share/zabbix/alertscirpts
+    mode: 1777
+    owner: zabbix
+    group: zabbix
+    state: directory
+    force: yes
+    follow: yes
