@@ -1,5 +1,14 @@
 ---
 
+- name: group add nginx user
+  group: 
+    name: www
+
+- name: group add nginx user
+  user:
+    name: www
+    group: www
+
 - name: install epel repo 
   yum: 
     name: epel-release
