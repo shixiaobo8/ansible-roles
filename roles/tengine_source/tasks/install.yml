@@ -1,5 +1,16 @@
 ---
 
+- name: install epel repo 
+  yum: 
+    name: epel-release
+    state: latest
+    update_cache: yes
+
+- name: install need pkgs
+  yum:
+    name: ['gcc','gcc-c++','automake','autoconf','cmake','openssl','openssl-devel','pcre-devel']
+    state: latest
+
 - name: download tengine 
   get_url:
     url: "{{ tengine_download_url }}"
