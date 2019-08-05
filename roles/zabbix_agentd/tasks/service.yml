@@ -1,11 +1,5 @@
 ---
 
-- name: create libmysqlclient.so.20
-  file:
-    src: /usr/local/mysql/lib/libmysqlclient.so.20 
-    dest: /usr/lib64/libmysqlclient.so.20
-    state: link
-
 - name: config zabbix_server start init script
   lineinfile: 
     path: "{{ item }}"
