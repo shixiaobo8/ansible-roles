@@ -1,5 +1,5 @@
 ---
-- hosts: codis3
+- hosts: chandao
   remote_user: root
   roles:
     - role: mysql_cluster

@@ -1,6 +1,6 @@
 ---
 
-- hosts: localhost
+- hosts: chandao
   remote_user: root
   roles:
     - role: php7

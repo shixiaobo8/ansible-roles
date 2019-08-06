@@ -1,0 +1,64 @@
+---
+
+- name: download nodejs
+  when: not nodejs_store_name is exists
+  delegate_to: localhost
+  get_url:
+    url: "{{ nodejs_download_url }}"
+    validate_certs: no
+    dest: "{{ soft_dir }}"
+
+- name: scp soft
+  synchronize:
+    src: "{{ nodejs_store_name }}"
+    dest: "{{ soft_dir }}"
+    mode: push
+
+- name: unarchive soft
+  unarchive:
+    src: "{{ nodejs_store_name }}"
+    dest: "{{ nodejs_install_dir }}"
+
+- name: link dir nodejs
+  file:
+    state: link
+    path: "{{ nodejs_install_name }}"
+    src: "{{ nodejs_install_name }}"
+    dest: "{{ nodejs_link_dir }}"
+    force: yes
+    follow: yes
+
+- name: link node command 
+  file:
+    state: link
+    src: "{{ node_bin }}"
+    dest: "/usr/bin/node"
+    force: yes
+    follow: yes
+
+- name: register node_version
+  shell: "node -v"
+  register: node_version
+
+- name: link npm command 
+  file:
+    state: link
+    src: "{{ npm_bin }}"
+    dest: "/usr/bin/npm"
+    force: yes
+    follow: yes
+
+- name: register npm_version
+  shell: "npm -v"
+  register: npm_version
+
+- name: register taobao source
+  shell:  npm config set registry https://registry.npm.taobao.org
+
+- name: register npm_source
+  shell: "npm config get registry"
+  register: npm_source
+
+- debug:
+    msg: "{{ node_version.stdout }}  {{ npm_version.stdout }}  {{ npm_source.stdout }}"
+

@@ -1,0 +1,11 @@
+---
+# defaults file for nodejs
+soft_dir: /root/softs/
+nodejs_version: node-v10.16.2-linux-x64
+nodejs_download_url: "https://nodejs.org/dist/v10.16.2/{{ nodejs_version }}.tar.xz"
+nodejs_store_name: "{{ soft_dir }}/{{ nodejs_version }}.tar.xz" 
+nodejs_install_dir: /usr/local/
+nodejs_install_name: "{{ nodejs_install_dir }}{{ nodejs_version }}"
+nodejs_link_dir: "{{ nodejs_install_dir }}/nodejs"
+node_bin: "{{ nodejs_link_dir }}/bin/node"
+npm_bin: "{{ nodejs_link_dir }}/bin/npm"
