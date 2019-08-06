@@ -1,0 +1,14 @@
+---
+# defaults file for eshead
+soft_dir: /root/softs/
+eshead_version: elasticsearch-head-5.0.0
+eshead_download_url: "https://github.com/mobz/elasticsearch-head/archive/v5.0.0.tar.gz"
+eshead_store_name: "{{ soft_dir }}/{{ eshead_version }}.tar.gz" 
+eshead_install_dir: /usr/local/
+eshead_install_name: "{{ eshead_install_dir }}{{ eshead_version }}"
+eshead_link_dir: "{{ eshead_install_dir }}/eshead"
+elasticsearch_url: 10.0.0.9:9200
+eshead_port: 9900
+eshead_start_cmd: grunt server
+redhat_supervisor_conf_dir: /etc/supervisord.d/
+debian_supervisor_conf_dir: /etc/supervisor/conf.d/

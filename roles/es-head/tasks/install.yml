@@ -1,0 +1,53 @@
+---
+
+- name: download eshead
+  when: not eshead_store_name is exists
+  delegate_to: localhost
+  get_url:
+    url: "{{ eshead_download_url }}"
+    validate_certs: no
+    dest: "{{ soft_dir }}"
+
+- name: scp soft
+  synchronize:
+    src: "{{ eshead_store_name }}"
+    dest: "{{ soft_dir }}"
+    mode: push
+
+- name: unarchive soft
+  unarchive:
+    src: "{{ eshead_store_name }}"
+    dest: "{{ eshead_install_dir }}"
+
+- name: link dir es head
+  file:
+    state: link
+    path: "{{ eshead_install_name }}"
+    src: "{{ eshead_install_name }}"
+    dest: "{{ eshead_link_dir }}"
+    force: yes
+    follow: yes
+
+- name: npm install
+  shell: "chdir={{ eshead_link_dir }}  . /etc/profile && sed -i 's/9100/{{ eshead_port }}/g' {{ eshead_link_dir }}/Gruntfile.js"
+
+- name: npm install pkgs
+  npm:
+    path: "{{ eshead_link_dir }}"
+    state: latest
+
+- name:  add start service to supervisor for redhat
+  template: 
+    src: eshead.ini.j2
+    dest: "{{ redhat_supervisor_conf_dir }}/eshead.ini"
+  notify:
+    - reread supervisor
+  when: ansible_os_family == 'RedHat'
+  
+- name:  add start service to supervisor for debian
+  template: 
+    src: eshead.ini.j2
+    dest: "{{ debian_supervisor_conf_dir }}/eshead.conf"
+  notify:
+    - reread supervisor
+  when: ansible_os_family == 'Debian'

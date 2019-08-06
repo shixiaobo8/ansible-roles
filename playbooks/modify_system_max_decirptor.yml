@@ -1,0 +1,11 @@
+---
+
+- hosts: all:!mongo*
+  remote_user: root
+  tasks:
+    - name: register limit_nums
+      shell: ulimit -n
+      register: limit_nums
+
+    - debug:
+        msg: "{{ limit_nums.stdout }}"

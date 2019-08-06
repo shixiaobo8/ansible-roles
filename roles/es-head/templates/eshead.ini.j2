@@ -1,0 +1,13 @@
+[program:eshead]
+command={{ eshead_start_cmd }}
+directory={{ eshead_link_dir }}
+process_name=eshead
+num_procs=2
+priority=990
+stopasgroup=true
+autostart=true
+autorestart=true
+stdout_logfile_maxbytes=40MB
+redirect_stderr=true
+stopsignal=QUIT
+stdout_logfile = /var/log/supervisor/es-head.log

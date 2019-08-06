@@ -1,0 +1,15 @@
+---
+# handlers file for es-head
+- name: reread supervisor
+  supervisorctl:
+    name: eshead
+    config: "{{ redhat_supervisor_conf_dir }}/eshead.ini"
+    state: present
+  when: ansible_os_family == 'RedHat'
+
+- name: reread supervisor
+  supervisorctl:
+    name: eshead
+    config: "{{ debian_supervisor_conf_dir }}/eshead.conf"
+    state: present
+  when: ansible_os_family == 'Debian'

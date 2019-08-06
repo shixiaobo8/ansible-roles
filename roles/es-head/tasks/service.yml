@@ -1,0 +1,6 @@
+---
+
+- name: restart eshead supervisor program
+  supervisorctl:
+    name: eshead
+    state: restarted

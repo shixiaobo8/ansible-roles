@@ -59,6 +59,9 @@
   shell: "npm config get registry"
   register: npm_source
 
+- name: npm install grunt
+  shell: "npm install -g grunt-cli && npm install mkdirp && ln -sf {{ nodejs_install_name }}/lib/node_modules/grunt-cli/bin/grunt /usr/bin/"
+
 - debug:
     msg: "{{ node_version.stdout }}  {{ npm_version.stdout }}  {{ npm_source.stdout }}"
 

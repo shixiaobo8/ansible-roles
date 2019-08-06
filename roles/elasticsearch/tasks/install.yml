@@ -1,4 +1,11 @@
 ---
+- name: confirm ulimts nums
+  shell: ulimit -n
+  register: limits_nums
+
+- debug:
+    msg: limits_nums
+    
 
 - name: create es group
   group:
@@ -58,17 +65,38 @@
     force: yes
     follow: yes
 
+- name: config es domain conf
+  blockinfile:
+    path: "{{ elasticsearch_link_dir }}/config/elasticsearch.yml"
+    block: |
+        http.cors.enabled: true
+        http.cors.allow-origin: "*"
+        network.host: 0.0.0.0
+
+- name: ensure max file decriptor is not default 1024 
+  blockinfile:
+    path: /etc/security/limits.conf
+    block: |
+        * hard nofile 102400
+        * soft nofile 102400
+
 - name: config es_home path
   blockinfile:
     path: /etc/profile
     block: "{{ es_path }}"
     backup: yes
 
+- name: confirm limits nums is required satisfy
+  fail: 
+    msg: "{{ limits_nums.stdout }} warnning: system file descriptor is less then 4096"
+  when: limits_nums.stdout | int < 4096
+
 - name: start es 
-  shell: "chdir={{ elasticsearch_link_dir }} . /etc/profile && ./bin/elasticsearch -d"
+  shell: "chdir={{ elasticsearch_link_dir }} . /etc/profile  && ./bin/elasticsearch -d"
   become: yes
   become_user: "{{ user }}"
   become_method: su
+  when: limits_nums.stdout | int >= 4096
 
 - name: wait for  9300 listen
   wait_for:
@@ -77,6 +105,7 @@
     timeout: 50
     state: started
     msg: "端口监听不正常!"
+  when: limits_nums.stdout | int  >= 4096
 
 - name: wait for 9200  listen
   wait_for:
@@ -85,10 +114,13 @@
     timeout: 50
     state: started
     msg: "端口监听不正常!"
+  when: limits_nums.stdout | int >= 4096
 
 - name: register is_listen
   shell: lsof -i:9200 | wc -l
   register: es_is_listen
+  when: limits_nums.stdout | int >= 4096
 
 - debug:
     msg: "{{ es_is_listen.stdout }}"
+  when: limits_nums.stdout | int  >= 4096
