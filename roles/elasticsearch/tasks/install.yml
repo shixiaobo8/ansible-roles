@@ -1,0 +1,94 @@
+---
+
+- name: create es group
+  group:
+    name:  "{{ group }}"
+
+- name: create es user
+  user:
+    name: "{{ user }}"
+    group: "{{ user }}"
+
+- name: download elasticsearch
+  when: not elasticsearch_store_name is exists
+  delegate_to: localhost
+  get_url:
+    url: "{{ elasticsearch_download_url }}"
+    validate_certs: no
+    dest: "{{ soft_dir }}"
+
+- name: scp soft
+  synchronize:
+    src: "{{ elasticsearch_store_name }}"
+    dest: "{{ soft_dir }}"
+    mode: push
+
+- name: unarchive soft
+  unarchive:
+    src: "{{ elasticsearch_store_name }}"
+    dest: "{{ elasticsearch_install_dir }}"
+
+- name: link dir elasticsearch
+  file:
+    state: link
+    path: "{{ elasticsearch_install_name }}"
+    src: "{{ elasticsearch_install_name }}"
+    dest: "{{ elasticsearch_link_dir }}"
+    force: yes
+    follow: yes
+    group: "{{ group }}"
+    owner: "{{ user }}"
+
+- name: chown es_home
+  shell: "chown -R {{ group }}:{{ user }} {{ elasticsearch_install_name }}"
+
+- name: create java command link
+  file:
+    state: link
+    src: "{{ JAVA_HOME }}/bin/java"
+    dest: "/usr/bin/java"
+    force: yes
+    follow: yes
+
+- name: create javac command link
+  file:
+    state: link
+    src: "{{ JAVA_HOME }}/bin/javac"
+    dest: "/usr/bin/javac"
+    force: yes
+    follow: yes
+
+- name: config es_home path
+  blockinfile:
+    path: /etc/profile
+    block: "{{ es_path }}"
+    backup: yes
+
+- name: start es 
+  shell: "chdir={{ elasticsearch_link_dir }} . /etc/profile && ./bin/elasticsearch -d"
+  become: yes
+  become_user: "{{ user }}"
+  become_method: su
+
+- name: wait for  9300 listen
+  wait_for:
+    port: 9300
+    delay: 3
+    timeout: 50
+    state: started
+    msg: "端口监听不正常!"
+
+- name: wait for 9200  listen
+  wait_for:
+    port: 9200
+    delay: 3
+    timeout: 50
+    state: started
+    msg: "端口监听不正常!"
+
+- name: register is_listen
+  shell: lsof -i:9200 | wc -l
+  register: es_is_listen
+
+- debug:
+    msg: "{{ es_is_listen.stdout }}"

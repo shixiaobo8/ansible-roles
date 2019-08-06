@@ -8,15 +8,8 @@ logstash_install_dir: /usr/local/
 logstash_install_name: "{{ logstash_install_dir }}{{ logstash_version }}"
 logstash_link_dir: "{{ logstash_install_dir }}/logstash"
 logstash_log_dir: "{{ logstash_link_dir }}/logs/"
-logstash_rule_conf_dir: "{{ logstash_link_dir }}/rules.d"
-logstash_node_conf_dir: "{{ logstash_link_dir }}/conf.d"
-logstash_main_conf: "{{ logstash_link_dir }}/logstash.yml"
-alertmanager_port: 9093
-alertmanager_domain_url: "{{ ansible_ssh_host }}:{{ alertmanager_port }}"
-local_node_domain: "{{ ansible_hostname }}"
-local_node_port: 9100
 logstash_data_dir: "{{ logstash_link_dir }}/data"
+logstash_conf_dir: "{{ logstash_link_dir }}/conf"
+logstash_main_conf: "{{ logstash_conf_dir }}/logstash.conf"
 logstash_bin: "{{ logstash_link_dir }}/logstash"
-logstash_start_cmd: "{{ logstash_bin }} --config.file={{ logstash_main_conf }} --storage.tsdb.path={{ logstash_data_dir }} --storage.tsdb.retention.time=60d --log.level=debug"
-supervisor_redhat_dir: /etc/supervisord.d/
-supervisor_debian_dir: /etc/supervisor/conf.d/
+elasticsearch_url: 10.0.0.9:9200

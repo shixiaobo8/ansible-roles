@@ -35,7 +35,11 @@
     force: yes
     follow: yes
   with_items:
-      - "{{ logstash_rule_conf_dir }}"
-      - "{{ logstash_node_conf_dir }}"
       - "{{ logstash_data_dir }}"
       - "{{ logstash_log_dir }}"
+      - "{{ logstash_conf_dir }}"
+
+- name: config logstash main conf
+  template:
+    src: logstash.conf.j2
+    dest: "{{ logstash_main_conf }}"
