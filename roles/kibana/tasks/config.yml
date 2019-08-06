@@ -1,0 +1,27 @@
+---
+
+- name: config promethues config
+  template: 
+    src: kibana.yml.j2
+    dest: "{{ kibana_main_conf }}"
+
+- name: config promethues node config
+  template: 
+    src: linux-nodes.json.j2
+    dest: "{{ kibana_node_conf }}"
+
+- name: add kibana to supervisor for redhat
+  template:
+    src: kibana.ini.j2
+    dest: "{{ supervisor_redhat_dir }}/kibana.ini"
+  notify:
+    reread_and_update_supervisor_redhat
+  when: ansible_os_family == 'RedHat'
+
+- name: add kibana to supervisor for debian
+  template:
+    src: kibana.ini.j2
+    dest: "{{ supervisor_debian_dir }}/kibana.ini"
+  notify:
+    reread_and_update_supervisor_debian
+  when: ansible_os_family == 'Debian'

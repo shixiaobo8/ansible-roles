@@ -1,0 +1,7 @@
+---
+
+- hosts: localhost:
+  remote_users: root
+  roles：
+    - role: linux_jdk1.8
+    - role: logstash

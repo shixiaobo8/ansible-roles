@@ -1,0 +1,8 @@
+---
+
+- name: restart supevisor program logstash
+  supervisorctl:
+    name: logstash
+    state: restarted
+    
+    

@@ -1,0 +1,8 @@
+---
+
+- name: restart supevisor program filebeat
+  supervisorctl:
+    name: filebeat
+    state: restarted
+    
+    

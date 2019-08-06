@@ -1,0 +1,22 @@
+---
+# defaults file for filebeat
+soft_dir: /root/softs/
+filebeat_version: filebeat-6.4.0
+filebeat_download_url: "https://artifacts.elastic.co/downloads/beats/filebeat/{{ filebeat_version }}-linux-x86_64.tar.gz"
+filebeat_store_name: "{{ soft_dir }}/{{ filebeat_version }}-linux-x86_64.tar.gz" 
+filebeat_install_dir: /usr/local/
+filebeat_install_name: "{{ filebeat_install_dir }}{{ filebeat_version }}"
+filebeat_link_dir: "{{ filebeat_install_dir }}/filebeat"
+filebeat_log_dir: "{{ filebeat_link_dir }}/logs/"
+filebeat_rule_conf_dir: "{{ filebeat_link_dir }}/rules.d"
+filebeat_node_conf_dir: "{{ filebeat_link_dir }}/conf.d"
+filebeat_main_conf: "{{ filebeat_link_dir }}/filebeat.yml"
+alertmanager_port: 9093
+alertmanager_domain_url: "{{ ansible_ssh_host }}:{{ alertmanager_port }}"
+local_node_domain: "{{ ansible_hostname }}"
+local_node_port: 9100
+filebeat_data_dir: "{{ filebeat_link_dir }}/data"
+filebeat_bin: "{{ filebeat_link_dir }}/filebeat"
+filebeat_start_cmd: "{{ filebeat_bin }} --config.file={{ filebeat_main_conf }} --storage.tsdb.path={{ filebeat_data_dir }} --storage.tsdb.retention.time=60d --log.level=debug"
+supervisor_redhat_dir: /etc/supervisord.d/
+supervisor_debian_dir: /etc/supervisor/conf.d/

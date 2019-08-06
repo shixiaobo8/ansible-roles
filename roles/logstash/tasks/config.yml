@@ -1,0 +1,27 @@
+---
+
+- name: config promethues config
+  template: 
+    src: logstash.yml.j2
+    dest: "{{ logstash_main_conf }}"
+
+- name: config promethues node config
+  template: 
+    src: linux-nodes.json.j2
+    dest: "{{ logstash_node_conf }}"
+
+- name: add logstash to supervisor for redhat
+  template:
+    src: logstash.ini.j2
+    dest: "{{ supervisor_redhat_dir }}/logstash.ini"
+  notify:
+    reread_and_update_supervisor_redhat
+  when: ansible_os_family == 'RedHat'
+
+- name: add logstash to supervisor for debian
+  template:
+    src: logstash.ini.j2
+    dest: "{{ supervisor_debian_dir }}/logstash.ini"
+  notify:
+    reread_and_update_supervisor_debian
+  when: ansible_os_family == 'Debian'

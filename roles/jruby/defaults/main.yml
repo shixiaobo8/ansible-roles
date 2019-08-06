@@ -1,0 +1,11 @@
+---
+# defaults file for jruby
+soft_dir: /root/softs/
+jruby_version: jruby-dist-9.2.7.0
+jruby_download_url: "https://repo1.maven.org/maven2/org/jruby/jruby-dist/9.2.7.0/{{ jruby_version }}-bin.tar.gz"
+jruby_store_name: "{{ soft_dir }}/{{ jruby_version }}-bin.tar.gz" 
+jruby_install_dir: /usr/local/
+jruby_install_name: "{{ jruby_install_dir }}/jruby-9.2.7.0"
+jruby_link_dir: "{{ jruby_install_dir }}/jruby"
+jruby_bin_dir: "{{ jruby_link_dir }}/bin"
+jruby_path: "export PATH=$PATH:{{ jruby_bin_dir }}"

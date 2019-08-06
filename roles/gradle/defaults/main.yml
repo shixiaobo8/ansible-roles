@@ -1,0 +1,11 @@
+---
+# defaults file for gradle
+soft_dir: /root/softs/
+gradle_version: gradle-5.5
+gradle_download_url: "http://services.gradle.org/distributions/{{ gradle_version }}-bin.zip"
+gradle_store_name: "{{ soft_dir }}/{{ gradle_version }}-bin.zip" 
+gradle_install_dir: /usr/local/
+gradle_install_name: "{{ gradle_install_dir }}{{ gradle_version }}"
+gradle_link_dir: "{{ gradle_install_dir }}/gradle"
+gradle_bin_dir: "{{ gradle_link_dir }}/bin"
+gradle_path: "export PATH=$PATH:{{ gradle_bin_dir }}"

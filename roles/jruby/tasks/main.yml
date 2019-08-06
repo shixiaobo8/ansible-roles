@@ -1,0 +1,3 @@
+---
+# tasks file for jruby
+- include_tasks: install.yml

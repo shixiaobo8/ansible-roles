@@ -1,0 +1,3 @@
+---
+# tasks file for gradle
+- include_tasks: install.yml

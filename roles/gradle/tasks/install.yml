@@ -1,0 +1,44 @@
+---
+
+- name: download gradle
+  when: not gradle_store_name is exists
+  delegate_to: localhost
+  get_url:
+    url: "{{ gradle_download_url }}"
+    validate_certs: no
+    dest: "{{ soft_dir }}"
+
+- name: scp soft
+  synchronize:
+    src: "{{ gradle_store_name }}"
+    dest: "{{ soft_dir }}"
+    mode: push
+
+- name: unarchive soft
+  unarchive:
+    src: "{{ gradle_store_name }}"
+    dest: "{{ gradle_install_dir }}"
+
+- name: link dir gradle
+  file:
+    state: link
+    path: "{{ gradle_install_name }}"
+    src: "{{ gradle_install_name }}"
+    dest: "{{ gradle_link_dir }}"
+    force: yes
+    follow: yes
+
+- name: config gradle to path
+  blockinfile:
+    path: /etc/profile
+    block: "{{ gradle_path }}" 
+    regexp: "{{  gradle_path }}"
+    create: yes
+    backup: yes
+
+- name: register gradle
+  shell: ". /etc/profile && gradle -v"
+  register: gradle_version
+
+- debug:
+    msg: "{{ gradle_version.stdout }}"

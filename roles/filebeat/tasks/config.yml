@@ -1,0 +1,27 @@
+---
+
+- name: config promethues config
+  template: 
+    src: filebeat.yml.j2
+    dest: "{{ filebeat_main_conf }}"
+
+- name: config promethues node config
+  template: 
+    src: linux-nodes.json.j2
+    dest: "{{ filebeat_node_conf }}"
+
+- name: add filebeat to supervisor for redhat
+  template:
+    src: filebeat.ini.j2
+    dest: "{{ supervisor_redhat_dir }}/filebeat.ini"
+  notify:
+    reread_and_update_supervisor_redhat
+  when: ansible_os_family == 'RedHat'
+
+- name: add filebeat to supervisor for debian
+  template:
+    src: filebeat.ini.j2
+    dest: "{{ supervisor_debian_dir }}/filebeat.ini"
+  notify:
+    reread_and_update_supervisor_debian
+  when: ansible_os_family == 'Debian'

@@ -1,0 +1,8 @@
+---
+
+- name: restart supevisor program kibana
+  supervisorctl:
+    name: kibana
+    state: restarted
+    
+    

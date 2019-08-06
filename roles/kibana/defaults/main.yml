@@ -1,0 +1,22 @@
+---
+# defaults file for kibana
+soft_dir: /root/softs/
+kibana_version: kibana-6.4.0
+kibana_download_url: "https://artifacts.elastic.co/downloads/kibana/{{ kibana }}-linux-x86_64.tar.gz"
+kibana_store_name: "{{ soft_dir }}/{{ kibana_version }}-linux-x86_64.tar.gz" 
+kibana_install_dir: /usr/local/
+kibana_install_name: "{{ kibana_install_dir }}{{ kibana_version }}"
+kibana_link_dir: "{{ kibana_install_dir }}/kibana"
+kibana_log_dir: "{{ kibana_link_dir }}/logs/"
+kibana_rule_conf_dir: "{{ kibana_link_dir }}/rules.d"
+kibana_node_conf_dir: "{{ kibana_link_dir }}/conf.d"
+kibana_main_conf: "{{ kibana_link_dir }}/kibana.yml"
+alertmanager_port: 9093
+alertmanager_domain_url: "{{ ansible_ssh_host }}:{{ alertmanager_port }}"
+local_node_domain: "{{ ansible_hostname }}"
+local_node_port: 9100
+kibana_data_dir: "{{ kibana_link_dir }}/data"
+kibana_bin: "{{ kibana_link_dir }}/kibana"
+kibana_start_cmd: "{{ kibana_bin }} --config.file={{ kibana_main_conf }} --storage.tsdb.path={{ kibana_data_dir }} --storage.tsdb.retention.time=60d --log.level=debug"
+supervisor_redhat_dir: /etc/supervisord.d/
+supervisor_debian_dir: /etc/supervisor/conf.d/

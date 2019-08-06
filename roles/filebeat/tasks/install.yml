@@ -1,0 +1,41 @@
+---
+
+- name: download filebeat
+  when: not filebeat_store_name is exists
+  delegate_to: localhost
+  get_url:
+    url: "{{ filebeat_download_url }}"
+    validate_certs: no
+    dest: "{{ soft_dir }}"
+
+- name: scp soft
+  synchronize:
+    src: "{{ filebeat_store_name }}"
+    dest: "{{ soft_dir }}"
+    mode: push
+
+- name: unarchive soft
+  unarchive:
+    src: "{{ filebeat_store_name }}"
+    dest: "{{ filebeat_install_dir }}"
+
+- name: link dir filebeat
+  file:
+    state: link
+    path: "{{ filebeat_install_name }}"
+    src: "{{ filebeat_install_name }}"
+    dest: "{{ filebeat_link_dir }}"
+    force: yes
+    follow: yes
+
+- name: create filebeat need dir
+  file:
+    state: directory
+    path: "{{ item }}"
+    force: yes
+    follow: yes
+  with_items:
+      - "{{ filebeat_rule_conf_dir }}"
+      - "{{ filebeat_node_conf_dir }}"
+      - "{{ filebeat_data_dir }}"
+      - "{{ filebeat_log_dir }}"

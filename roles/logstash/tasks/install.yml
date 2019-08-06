@@ -1,0 +1,41 @@
+---
+
+- name: download logstash
+  when: not logstash_store_name is exists
+  delegate_to: localhost
+  get_url:
+    url: "{{ logstash_download_url }}"
+    validate_certs: no
+    dest: "{{ soft_dir }}"
+
+- name: scp soft
+  synchronize:
+    src: "{{ logstash_store_name }}"
+    dest: "{{ soft_dir }}"
+    mode: push
+
+- name: unarchive soft
+  unarchive:
+    src: "{{ logstash_store_name }}"
+    dest: "{{ logstash_install_dir }}"
+
+- name: link dir logstash
+  file:
+    state: link
+    path: "{{ logstash_install_name }}"
+    src: "{{ logstash_install_name }}"
+    dest: "{{ logstash_link_dir }}"
+    force: yes
+    follow: yes
+
+- name: create logstash need dir
+  file:
+    state: directory
+    path: "{{ item }}"
+    force: yes
+    follow: yes
+  with_items:
+      - "{{ logstash_rule_conf_dir }}"
+      - "{{ logstash_node_conf_dir }}"
+      - "{{ logstash_data_dir }}"
+      - "{{ logstash_log_dir }}"

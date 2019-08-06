@@ -1,0 +1,44 @@
+---
+
+- name: download jruby
+  when: not jruby_store_name is exists
+  delegate_to: localhost
+  get_url:
+    url: "{{ jruby_download_url }}"
+    validate_certs: no
+    dest: "{{ soft_dir }}"
+
+- name: scp soft
+  synchronize:
+    src: "{{ jruby_store_name }}"
+    dest: "{{ soft_dir }}"
+    mode: push
+
+- name: unarchive soft
+  unarchive:
+    src: "{{ jruby_store_name }}"
+    dest: "{{ jruby_install_dir }}"
+
+- name: link dir jruby
+  file:
+    state: link
+    path: "{{ jruby_install_name }}"
+    src: "{{ jruby_install_name }}"
+    dest: "{{ jruby_link_dir }}"
+    force: yes
+    follow: yes
+
+- name: config jruby to path
+  blockinfile:
+    path: /etc/profile
+    block: "{{ jruby_path }}" 
+    regexp: "{{  jruby_path }}"
+    create: yes
+    backup: yes
+
+- name: register jruby
+  shell: ". /etc/profile && jruby -v"
+  register: jruby_version
+
+- debug:
+    msg: "{{ jruby_version.stdout }}"

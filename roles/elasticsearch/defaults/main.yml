@@ -1,0 +1,13 @@
+---
+# defaults file for elasticsearch
+group: elasticsearch
+user: elasticsearch
+JAVA_HOME: /usr/java/jdk1.8.0_211/bin/
+soft_dir: /root/softs/
+elasticsearch_version: elasticsearch-6.4.0
+elasticsearch_download_url: "https://artifacts.elastic.co/downloads/elasticsearch/{{ elasticsearch_version }}.tar.gz"
+elasticsearch_store_name: "{{ soft_dir }}/{{ elasticsearch_version }}.tar.gz" 
+elasticsearch_install_dir: /usr/local/
+elasticsearch_install_name: "{{ elasticsearch_install_dir }}{{ elasticsearch_version }}"
+elasticsearch_link_dir: "{{ elasticsearch_install_dir }}/elasticsearch"
+es_path: "export ES_HOME={{ elasticsearch_link_dir }}"
