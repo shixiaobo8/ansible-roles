@@ -1,0 +1,9 @@
+---
+# defaults file for add_zabbix_service_monitor
+service_name: "{{ zbx_service_key }}"
+zbx_service_key: "{{ ansible_ssh_host }}"
+service_processnames: "{{ service_process_names }}"
+zbx_service_conf_dir: /usr/local/zabbix/etc/zabbix_agentd.conf.d/
+zbx_service_agent_conf: "{{ zbx_service_conf_dir }}/{{ service_name }}-service.conf"
+zbx_service_script_dir: /usr/local/zabbix/share/zabbix/alertscripts/
+zbx_service_script: "{{ zbx_service_script_dir }}/monitor_{{ service_name }}.sh"

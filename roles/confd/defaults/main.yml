@@ -1,0 +1,12 @@
+---
+# defaults file for confd
+soft_dir: /root/softs/
+confd_version: confd-0.16.0-linux-amd64
+confd_download_url: "https://github.com/kelseyhightower/confd/releases/download/v0.16.0/confd-0.16.0-linux-amd64"
+confd_store_name: "{{ soft_dir }}/{{ confd_version }}" 
+confd_install_dir: /usr/bin/
+confd_install_name: "{{ confd_install_dir }}{{ confd_version }}"
+confd_link_dir: "{{ confd_install_dir }}/confd"
+confd_conf_dir: "etc/confd/conf.d"
+confd_main_conf: "{{ confd_conf_dir }}/myconfig.toml"
+confd_template_dir: "etc/confd/conf.d"

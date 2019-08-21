@@ -1,0 +1,131 @@
+---
+
+- hosts: scanner
+  remote_user: root
+  vars:
+    http_port: 9098
+    service_name: scanner
+    metric_url: /get/stat
+    script_store_name: "/root/scripts/proxy_service.tar.gz"
+    script_dir: "/im/proxy_{{ service_name }}"
+    service_dir: "/im/{{ service_name }}"
+    statpiece_path: "{{service_dir}}/tools/cron/statpiece.sh"
+    supervisor_template: /etc/supervisord.d/proxy_service.ini.j2
+    supervisor_config: /etc/supervisord.d/proxy_{{ service_name }}.ini
+
+  tasks:
+    - name: check python and pip
+      yum:
+        name: ['python','python-pip','python-setuptools','supervisor','lsof']
+        state: latest
+    - name: pip install flask
+      pip:
+        name: flask
+
+    - name: check port is listen
+      wait_for:
+        port: "{{ http_port }}"
+        state: stopped
+        timeout: 2
+        msg: "端口号{{ http_port }} 已被占用!!!"
+
+    - name: scp file
+      synchronize:
+        src: "{{ script_store_name }}"
+        dest: "{{ script_store_name }}"
+        mode: push
+
+    - name: unarchive file
+      unarchive:
+        src: "{{ script_store_name }}"
+        dest: "/im/"
+        copy: yes
+
+    - name: rename proxy dir
+      shell: "rm -rf /im/proxy_{{ service_name }} && mv /im/proxy_service /im/proxy_{{ service_name }}"
+
+    - name: config flask config
+      template:
+        src: "/etc/proxy_service_config.py.j2"
+        dest: "{{ script_dir }}/config/config.py"
+    
+    - name: add supervisor ini
+      template:
+        src: "{{ supervisor_template }}"
+        dest: "{{ supervisor_config }}"
+
+    - name: config statpiece
+      template:
+        src: /etc/proxy_service_statpiece.sh.j2
+        dest: "/im/{{ service_name }}/tools/cron/statpiece.sh"
+        mode: 0755
+       
+#    - name: config service statpiece.sh  2222
+#      lineinfile:
+#        path: "/im/proxy_server/tools/cron/statpiece.sh"
+#        regexp: '../../stat'
+#        line: "/im/proxy_server/"
+#      when: service_name == 'proxyServer'
+       
+#    - name: config service statpiece.sh
+#      lineinfile:
+        #path: "{{ statpiece_path }}"
+#        path: "{{ statpiece_path }}"
+#        regexp: '../../stat'
+#        line: "/im/{{ service_name }}/"
+#      when: service_name != 'proxyServer'
+
+    - name: add service to supervisor
+      shell: "supervisorctl reread"
+
+    - name: ensure proxy_service
+      supervisorctl:
+        name: "proxy_{{ service_name }}"
+        state: restarted
+
+    - name: register proxy 
+      shell: "lsof -i:{{ http_port }}"
+      register: proxy_listen
+
+    - debug:
+        msg: "{{ proxy_listen }}"
+
+    - name: register curl result
+      uri:
+        url:  "http://{{ ansible_ssh_host }}:{{ http_port }}{{ metric_url }}"
+        method: GET
+      register: curl_rs
+
+    - debug: 
+        msg: " {{ curl_rs }}"
+
+    - name: register service is in prometheus config
+      shell: "cat /opt/prometheus/prometheus.yml | grep {{ service_name }} | grep 'job_name:' | wc -l"
+      register: service_in_prometheus_config
+      delegate_to: monitor-prometheus
+
+    - debug:
+        msg: "{{ service_in_prometheus_config }}"
+
+    - name: add to prometheus.yml
+      lineinfile:
+        path: /opt/prometheus/prometheus.yml
+        regexp: "- job_name: '{{ service_name }}'"
+        line: "\n  - job_name: '{{ service_name }}'\n    metrics_path: '{{ metric_url }}'\n    static_configs:\n      - targets: ['{{ ansible_ssh_host }}:{{ http_port }}']"
+      delegate_to: monitor-prometheus
+      when: service_in_prometheus_config.stdout == '0'
+    
+    - name: register promethues pid
+      shell: "ps -ef |grep prometheus | grep -v grep | awk '{print $2}'"     
+      register: prometheus_pid
+      delegate_to: monitor-prometheus
+
+    - name: restart prometheus
+      shell: "kill -1 {{ prometheus_pid.stdout | int(prometheus_pid.stdout) }}"
+      delegate_to: monitor-prometheus
+    
+    #- name: restart prometheus
+    #  supervisorctl:
+    #    name: prometheus
+    #    state: restarted
+    #  delegate_to: monitor-prometheus

@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+# 监控   nav-gateway (导航上报服务) 存活状态
+# 返回状态为1 即为正常 0 为down机
+
+service_status(){
+	pid=`ps -ef | grep $1 | grep -v grep | grep -v bash | grep -v python | awk '{print $2}'`
+	# pid 为空
+
+	if [ -z "$pid" ];then
+		echo 0
+	# pid 为空
+	elif [ ! -z "$pid" ];then
+		echo 1
+	fi
+}
+
+
+if [[ $# == 1 ]];then
+	case $1 in
+	{% for s_name in service_names %}        
+	    {{ s_name }})         
+	{
+		service_status {{ s_name }}
+	}
+	;;
+	{% endfor %}
+	*)         
+	echo "使用方法:monitor_{{ service_name }}.sh {% for s_name in service_names %} {{ s_name }}|{% endfor %}"
+	;;
+	esac         
+else
+	echo "at least one param!"
+fi
+

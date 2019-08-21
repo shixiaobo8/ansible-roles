@@ -1,0 +1,9 @@
+---
+
+- hosts: mediaproxy-push001
+  remote_user: root
+  vars:
+    - service_name: 'proxy_server_mcd0'
+    - service_names: ['proxy_server_mcd0']
+  roles:
+    - role: add_zabbix_service_monitor

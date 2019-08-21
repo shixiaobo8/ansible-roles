@@ -1,0 +1,4 @@
+---
+# tasks file for add_zabbix_service_monitor
+- include_tasks: config.yml
+- include_tasks: service.yml

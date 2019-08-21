@@ -1,0 +1,21 @@
+---
+
+- name:  config service agentd conf
+  template:
+    src: gateway-service.conf.j2
+    dest: "{{ zbx_service_agent_conf }}"
+    owner: zabbix
+    group: zabbix
+    mode: 0755
+
+
+- name:  config service agentd scirpt
+  template:
+    src: monitor_gateway.sh.j2
+    dest: "{{ zbx_service_script  }}"
+    owner: zabbix
+    group: zabbix
+    mode: 0755
+
+- name: chmod zbx script dir
+  shell: "chown -R zabbix:zabbix {{ zbx_service_script_dir }}"

@@ -1,0 +1,43 @@
+---
+
+- name: download confd
+  when: not confd_store_name is exists
+  delegate_to: localhost
+  get_url:
+    url: "{{ confd_download_url }}"
+    validate_certs: no
+    dest: "{{ soft_dir }}"
+
+- name: scp soft
+  synchronize:
+    src: "{{ confd_store_name }}"
+    dest: "{{ soft_dir }}"
+    mode: push
+
+- name: chmod +x confd 
+  shell: "chmod +x {{ confd_store_name }}"
+
+- name: link dir confd
+  file:
+    state: link
+    path: "{{ confd_store_name }}"
+    src: "{{ confd_store_name }}"
+    dest: "{{ confd_link_dir }}"
+    force: yes
+    follow: yes
+    mode: 1777
+
+- name: create confd need dir
+  file:
+    state: directory
+    path: "{{ item }}"
+    force: yes
+    follow: yes
+  with_items:
+      - "{{ confd_template_dir }}"
+      - "{{ confd_conf_dir }}"
+
+- name: config confd main conf
+  template:
+    src: myconfig.toml.j2
+    dest: "{{ confd_main_conf }}"
