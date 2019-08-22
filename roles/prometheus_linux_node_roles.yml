@@ -1,6 +1,6 @@
 ---
 
-- hosts: all:!mongo*
+- hosts: all:!es-monitor
   remote_user: root
   roles:
     - role: prometheus_linux_node
