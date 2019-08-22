@@ -98,6 +98,9 @@
   become_method: su
   when: limits_nums.stdout | int >= 4096
 
+- name: modify kernal vm params 
+  shell: echo 'vm.max_map_count=262144' >> /etc/sysctl.conf && sysctl -p
+
 - name: wait for  9300 listen
   wait_for:
     port: 9300

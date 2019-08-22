@@ -1,0 +1,9 @@
+server{
+	server_name {{ kibana_http_domain }};
+	listen 80;
+
+	location / {
+		proxy_pass http://{{ kibana_host }}:{{ kibana_port }};
+	}
+
+}

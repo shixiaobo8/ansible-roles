@@ -1,14 +1,14 @@
 ---
 
-- name: config promethues config
+- name: config kibana config
   template: 
     src: kibana.yml.j2
     dest: "{{ kibana_main_conf }}"
 
-- name: config promethues node config
-  template: 
-    src: linux-nodes.json.j2
-    dest: "{{ kibana_node_conf }}"
+- name: config tengine kibana conf
+  template:
+    src: kibana.conf.j2
+    dest: "{{ tengine_vhost_dir }}/kibana.conf"
 
 - name: add kibana to supervisor for redhat
   template:
