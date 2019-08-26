@@ -2,8 +2,8 @@
 # defaults file for logstash
 soft_dir: /root/softs/
 logstash_version: logstash-6.4.0
-logstash_download_url: "https://artifacts.elastic.co/downloads/logstash/{{ logstash_version }}.tar.gz"
-logstash_store_name: "{{ soft_dir }}/{{ logstash_version }}.tar.gz" 
+logstash_download_url: "https://artifacts.elastic.co/downloads/logstash/{{ logstash_version }}.zip"
+logstash_store_name: "{{ soft_dir }}/{{ logstash_version }}.zip" 
 logstash_install_dir: /usr/local/
 logstash_install_name: "{{ logstash_install_dir }}{{ logstash_version }}"
 logstash_link_dir: "{{ logstash_install_dir }}/logstash"
@@ -12,4 +12,4 @@ logstash_data_dir: "{{ logstash_link_dir }}/data"
 logstash_conf_dir: "{{ logstash_link_dir }}/conf"
 logstash_main_conf: "{{ logstash_conf_dir }}/logstash.conf"
 logstash_bin: "{{ logstash_link_dir }}/logstash"
-elasticsearch_url: 10.0.0.9:9200
+elasticsearch_url: "{{ ansible_ssh_host }}:9200"

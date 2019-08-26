@@ -1,0 +1,20 @@
+#=========================== Filebeat inputs ==============
+filebeat.inputs:
+
+- type: log
+
+  enabled: true
+
+  paths:
+    - /var/log/*.log
+
+#============================== Dashboards ===============
+setup.dashboards.enabled: false
+
+#============================== Kibana ==================
+setup.kibana:
+  host: "{{ kibana_url }}"
+
+#-------------------------- Elasticsearch output ---------
+output.elasticsearch:
+  hosts: ["{{ es_url }}"]

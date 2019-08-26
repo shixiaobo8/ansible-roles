@@ -19,7 +19,7 @@ zabbix_server_conf: /usr/local/zabbix/etc/zabbix_server.conf
 zabbix_agentd_conf: /usr/local/zabbix/etc/zabbix_agentd.conf
 zabbix_server_port: 10051
 zabbix_agent_port: 10050
-zabbix_server_ip: 10.0.0.6
+zabbix_server_ip: 172.17.14.155
 zabbix_server_mysql_host: "{{ ansible_ssh_host }}"
 zabbix_server_mysql_root_pwd: 123456
 zabbix_server_mysql_db: zabbix

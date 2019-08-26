@@ -4,5 +4,12 @@
   supervisorctl:
     name: kibana
     state: restarted
-    
-    
+
+- name: wait for kibana listen on port
+  wait_for:
+    port: "{{ kibana_port }}"
+    delay: 5
+    msg: "kibana 启动失败!"
+
+- name: reload nginx
+  shell: "{{ nginx_bin }} -s reload"

@@ -27,15 +27,3 @@
     dest: "{{ filebeat_link_dir }}"
     force: yes
     follow: yes
-
-- name: create filebeat need dir
-  file:
-    state: directory
-    path: "{{ item }}"
-    force: yes
-    follow: yes
-  with_items:
-      - "{{ filebeat_rule_conf_dir }}"
-      - "{{ filebeat_node_conf_dir }}"
-      - "{{ filebeat_data_dir }}"
-      - "{{ filebeat_log_dir }}"

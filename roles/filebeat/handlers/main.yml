@@ -1,2 +1,16 @@
 ---
 # handlers file for filebeat
+
+- name: reread_and_update_supervisor_redhat
+  supervisorctl:
+    state: present
+    name: filebeat
+    config: "{{ supervisor_redhat_dir }}/filebeat.ini"
+  when: ansible_ssh_host == 'RedHat'
+
+- name: reread_and_update_supervisor_debian
+  supervisorctl:
+    state: present
+    name: filebeat
+    config: "{{ supervisor_redhat_dir }}/filebeat.ini"
+  when: ansible_ssh_host == 'Debian'

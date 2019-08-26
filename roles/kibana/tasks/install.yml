@@ -27,15 +27,3 @@
     dest: "{{ kibana_link_dir }}"
     force: yes
     follow: yes
-
-- name: create kibana need dir
-  file:
-    state: directory
-    path: "{{ item }}"
-    force: yes
-    follow: yes
-  with_items:
-      - "{{ kibana_rule_conf_dir }}"
-      - "{{ kibana_node_conf_dir }}"
-      - "{{ kibana_data_dir }}"
-      - "{{ kibana_log_dir }}"

@@ -1,14 +1,9 @@
 ---
 
-- name: config promethues config
+- name: config filebeat config
   template: 
     src: filebeat.yml.j2
     dest: "{{ filebeat_main_conf }}"
-
-- name: config promethues node config
-  template: 
-    src: linux-nodes.json.j2
-    dest: "{{ filebeat_node_conf }}"
 
 - name: add filebeat to supervisor for redhat
   template:
