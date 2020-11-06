@@ -1,6 +1,6 @@
 ---
 
-- hosts: localhost
+- hosts: houtai_rukou
   remote_user: root
   roles:
     - role: filebeat

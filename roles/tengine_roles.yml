@@ -1,6 +1,6 @@
 ---
 
-- hosts: chandao
+- hosts: rukou
   remote_user: root
   roles:
     - role: tengine_source

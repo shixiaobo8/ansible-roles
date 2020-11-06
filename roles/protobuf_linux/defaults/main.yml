@@ -1,0 +1,14 @@
+---
+# defaults file for protobuf_linux
+protobuf_linux_version: v3.12.0
+protobuf_linux_download_url: https://github.com/protocolbuffers/protobuf/releases/download/v3.12.0/protobuf-all-3.12.0.tar.gz
+protobuf_linux_soft_name: protobuf-all-3.12.0.tar.gz
+protobuf_linux_store_name: /root/softs/protobuf-all-3.12.0.tar.gz
+protobuf_linux_config: "./configure --prefix=/usr/local/protobuf && make && make install"
+protobuf_linux_soft_dir: /usr/local/protobuf
+protobuf_linux_root: /usr/local/protobuf
+protobuf_linux_path: /usr/local/protobuf
+golang_soft_dir: /usr/local/go
+goroot: /usr/local/golang
+gopath: /usr/local/golang/gopath
+protobuf_linux_env: "export GOROOT={{ goroot }}\nexport GOPATH={{ gopath }}\nexport GOBIN=$GOPATH/bin\nexport PATH=$PATH:$GOROOT/bin\nexport PATH=$PATH:$GOPATH/bin\nexport GO111MODULE=on\nexport GOPROXY=https://goproxy.cn\nexport PROTOBUF=/usr/local/protobuf/bin\nexport PATH=$PROTOBUF:$PATH"

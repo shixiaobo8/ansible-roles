@@ -1,0 +1,7 @@
+---
+
+- name: test protoc
+  shell: ". /etc/profile && protoc --version | awk '{print $3}' |cut -b 3-"
+  register: protobuf_version
+
+- debug: msg="{{ protobuf_version }}"

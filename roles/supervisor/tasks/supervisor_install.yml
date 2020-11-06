@@ -14,7 +14,7 @@
   notify: start supervisord
 
 - name: restart supervisor
-  service: name=supervisor state=restarted
+  service: name=supervisord state=restarted
   when: ansible_os_family == 'Debian'
 
 - name: restart supervisord
@@ -22,7 +22,7 @@
   when: ansible_os_family == 'RedHat'
 
 - name: enable boot start supervisor
-  shell: systemctl enable supervisor
+  shell: systemctl enable supervisord
   when: ansible_os_family == 'Debian'
 
 - name: enable boot start supervisord

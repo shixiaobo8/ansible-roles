@@ -1,0 +1,24 @@
+---
+
+- hosts:  web_servers
+  remote_user: root
+  tasks:
+    - name:  批量提交svn
+      shell: "chdir=/www/web/api.yikaobang.com.cn/ svn up {{ item }}"
+      with_items:
+        - application/models/Report.php
+        - application/models/User.php
+        - application/models/UserBan.php
+        - application/models/UserBanReason.php
+        - application/modelsEloquent/Base.php
+        - application/modelsEloquent/Report.php
+        - application/modelsEloquent/UserBan.php
+        - application/modelsEloquent/UserBanReason.php
+        - application/modelsEloquent/UserBanTrait.php
+        - application/modules/Admin/controllers/Comment.php
+        - application/modules/Admin/controllers/User.php
+        - application/modules/Bbs/controllers/Article.php
+        - application/modules/Comment/controllers/Main.php
+        - application/modules/User/controllers/Access.php
+        - application/modules/User/controllers/Behavior.php
+        - application/controllers/AccessTrait.php

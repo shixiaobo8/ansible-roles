@@ -8,55 +8,11 @@
         backup: yes
         path: /etc/hosts
         block: |
-          172.19.0.13     linux-jumpserver        linux-jumpserver
-          172.19.0.12             resmgr-nginx-php
-          172.19.0.11             resmgr-dps
-          172.19.0.9              usercenter002
-          172.19.0.10             usercenter001
-          172.19.0.7              uss002
-          172.19.0.8              uss001
-          172.19.0.6              msgcenter001
-          172.19.0.5              msgcenter002
-          172.19.0.4              mediaproxy-push001
-          172.19.0.3              mediaproxy-push002
-          172.19.0.2              buddy001
-          172.19.0.1              buddy002
-          172.19.0.251            group001
-          172.19.0.252            group002
-          172.19.0.249            regionv2001
-          172.19.0.250            regionv2002
-          172.19.0.247            region002
-          172.19.0.248            region001
-          172.19.0.246            gateway002
-          172.19.0.245            gateway001
-          172.19.0.244            nav_upload001
-          172.19.0.243            nav_upload002
-          172.19.0.244            nav-upload001
-          172.19.0.243            nav-upload002
-          172.19.0.240            IM-Cache-redis003
-          172.19.0.242            IM-Cache-redis002
-          172.19.0.241            IM-Cache-redis001
-          172.19.0.240            zookeeper-node1
-          172.19.0.241            zookeeper-node2
-          172.19.0.242            zookeeper-node3
-          172.19.0.239            IM-Storage-mongo003
-          172.19.0.238            IM-Storage-mongo002
-          172.19.0.237            IM-Storage-mongo001
-          172.19.0.236            IM-Storage-mysql1
-          172.19.0.235            IM-Storage-mysql2
-          172.19.0.13             linux-jumpserver
-          172.19.0.14             monitor-zabbix
-          172.19.0.15             monitor-grafana
-          172.19.0.16             monitor-prometheus
-          172.19.0.17             scanner
-          172.19.0.18             paygw001
-          172.19.0.19             paygw002
-          172.19.0.20             nsq002
-          172.19.0.21             nsq001
-          172.19.0.22             nsq003 
-          172.19.0.23             profitsmanager-miner
-          172.19.0.23             profitsmanager_miner
-          172.19.0.24             profitdispatch_digscanner
-          172.19.0.24             profitdispatch-digscanner
-          172.19.0.25             mining_fnaccept
-          172.19.0.25             mining-fnaccept
+          172.17.14.159 temp_server02 ykb-temp-server002
+          172.17.14.158 temp_server01  ykb-temp-server001      
+          172.17.14.155 es-monitor
+          172.17.14.145 ykb_new_test
+          172.17.14.144 mongo-rabbitmq-git rabbitmq-mongo-git-apache-svn
+          172.17.14.143 ykb-server-rukou  houtai_rukou    
+          172.17.14.142 backend_web_php2_houtai  houtai_php_43
+          172.17.14.141 backend_web_php1  houtai_php_218

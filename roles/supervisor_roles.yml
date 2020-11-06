@@ -1,5 +1,5 @@
 ---
-- hosts: codis
+- hosts: all
   remote_user: root
   roles:
     - role: supervisor  #指定角色

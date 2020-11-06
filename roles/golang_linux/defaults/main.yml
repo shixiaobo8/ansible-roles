@@ -1,10 +1,10 @@
 ---
 # defaults file for golang_linux
-golang_version: go1.12.7
-golang_download_url: https://studygolang.com/dl/golang/go1.12.7.linux-amd64.tar.gz
-golang_soft_name: go1.12.7.linux-amd64.tar.gz
-golang_store_name: /root/softs/go1.12.7.linux-amd64.tar.gz
+golang_version: go1.15.3
+golang_download_url: https://studygolang.com/dl/golang/go1.15.3.linux-amd64.tar.gz
+golang_soft_name: go1.15.3.linux-amd64.tar.gz
+golang_store_name: /root/softs/go1.15.3.linux-amd64.tar.gz
 golang_soft_dir: /usr/local/go
 goroot: /usr/local/golang
 gopath: /usr/local/golang/gopath
-go_env: "export GOROOT={{ goroot }}\nexport GOPATH={{ gopath }}\nexport GOBIN=$GOPATH/bin\nexport PATH=$PATH:$GOROOT/bin\nexport PATH=$PATH:$GOPATH/bin"
+go_env: "export GOROOT={{ goroot }}\nexport GOPATH={{ gopath }}\nexport GOBIN=$GOPATH/bin\nexport PATH=$PATH:$GOROOT/bin\nexport PATH=$PATH:$GOPATH/bin\nexport GO111MODULE=on\nexport GOPROXY=https://goproxy.cn"

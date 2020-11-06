@@ -1,0 +1,22 @@
+---
+
+- name: check and create soft dir
+  file: path=/root/softs/ state=directory
+
+- name: download protobuf_linux  to only  local for profile
+  get_url: 
+    url: "{{ protobuf_linux_download_url }}"
+    dest: /root/softs/
+    force: no
+    validate_certs: no
+  delegate_to: localhost
+  when: not protobuf_linux_store_name is exists
+
+- name: scp protobuf_linux software to remote host
+  synchronize: "src=/root/softs/{{ protobuf_linux_soft_name }} dest=/root/softs/ mode=push"
+
+- name: unarchive protobuf_linux soft 
+  unarchive: "src=/root/softs/{{ protobuf_linux_soft_name }} dest=/root/softs/ creates={{ protobuf_linux_soft_dir }} copy=no"
+
+- name: config make install
+  shell: "chdir=/root/softs/protobuf-3.12.0 {{ protobuf_linux_config }}"

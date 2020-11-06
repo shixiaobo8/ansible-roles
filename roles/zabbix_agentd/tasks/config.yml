@@ -27,7 +27,7 @@
 - name: config tcp_conn_status script
   template:
     src: tcp_conn_status.sh.j2
-    dest: "{{ zabbix_scripts_dir }}/tcp_conn_status.sh.j2"
+    dest: "{{ zabbix_scripts_dir }}/tcp_conn_status.sh"
     backup: yes
     mode: 1777
     owner: "{{ user }}"
